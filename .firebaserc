@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "medical-app-25f81"
+  },
+  "targets": {
+    "medical-app-25f81": {
+      "hosting": {
+        "public": [
+          "dist"
+        ]
+      }
+    }
   }
 }

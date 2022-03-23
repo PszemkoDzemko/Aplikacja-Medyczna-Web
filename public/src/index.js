@@ -18,30 +18,64 @@ const analytics = getAnalytics(app);
 
 const db = getFirestore()
 
-const cafeList = document.querySelector('#cafe-list');
-console.log(cafeList)
+const userTable = document.querySelector('#add-users-table');
 
-function renderCafe(doc){
-  let li = document.createElement('li');
-  let name = document.createElement('span');
-  let surname = document.createElement('span');
+function renderUsers(doc){
+  let tr = document.createElement('tr');
+  let name = document.createElement('td');
+  let surname = document.createElement('td');
+  let pesel = document.createElement('td');
+  let phone = document.createElement('td');
+  let address = document.createElement('td');
   name.textContent = doc.data().name;
   surname.textContent = doc.data().surname;
+  pesel.textContent = doc.data().pesel;
+  phone.textContent = doc.data().phone;
+  address.textContent = doc.data().address;
+  
+  tr.setAttribute('data-id',doc.id);
+  tr.appendChild(name);
+  tr.appendChild(surname);
+  tr.appendChild(pesel);
+  tr.appendChild(phone);
+  tr.appendChild(address);
 
-  li.setAttribute('data-id',doc.id);
-  li.appendChild(name);
-  li.appendChild(surname);
+  userTable.appendChild(tr);
+} 
 
-  cafeList.appendChild(li);
-}
+const docTable = document.querySelector('#add-doctor-table');
 
-const colRef = collection(db,"users")
-getDocs(colRef)
+function renderDocs(doc){
+  let tr = document.createElement('tr');
+  let name = document.createElement('td');
+  let surname = document.createElement('td');
+  let specialization = document.createElement('td');
+  name.textContent = doc.data().name;
+  surname.textContent = doc.data().surname;
+  specialization.textContent = doc.data().specialization
+
+  tr.setAttribute('data-id',doc.id);
+  tr.appendChild(name);
+  tr.appendChild(surname);
+  tr.appendChild(specialization);
+
+  docTable.appendChild(tr);
+} 
+
+const userCol = collection(db,"users")
+getDocs(userCol)
 .then((snapshot)=>{
     snapshot.docs.forEach((doc)=>{
-       renderCafe(doc)
-       console.log(doc)
+       renderUsers(doc)
     })
+})
+
+const doctorCol = collection(db,"doctors")
+getDocs(doctorCol)
+.then((snapshot)=>{
+  snapshot.docs.forEach((doc)=>{
+    renderDocs(doc)
+  })
 })
 
 

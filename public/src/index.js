@@ -33,6 +33,7 @@ function renderUsers(doc){
   phone.textContent = doc.data().phone;
   address.textContent = doc.data().address;
   
+
   tr.setAttribute('data-id',doc.id);
   tr.appendChild(name);
   tr.appendChild(surname);
@@ -50,14 +51,19 @@ function renderDocs(doc){
   let name = document.createElement('td');
   let surname = document.createElement('td');
   let specialization = document.createElement('td');
+  let img = document.createElement('img');
+
+
   name.textContent = doc.data().name;
   surname.textContent = doc.data().surname;
   specialization.textContent = doc.data().specialization
+  img.src = doc.data().img
 
   tr.setAttribute('data-id',doc.id);
   tr.appendChild(name);
   tr.appendChild(surname);
   tr.appendChild(specialization);
+  tr.appendChild(img);
 
   docTable.appendChild(tr);
 } 

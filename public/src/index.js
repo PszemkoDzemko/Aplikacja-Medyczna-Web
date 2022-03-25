@@ -15,64 +15,63 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
 const db = getFirestore()
 
-const userTable = document.querySelector('#add-users-table');
+// const userTable = document.querySelector('#add-users-table');
 
-function renderUsers(doc){
-  let tr = document.createElement('tr');
-  let name = document.createElement('td');
-  let surname = document.createElement('td');
-  let pesel = document.createElement('td');
-  let phone = document.createElement('td');
-  let address = document.createElement('td');
-  name.textContent = doc.data().name;
-  surname.textContent = doc.data().surname;
-  pesel.textContent = doc.data().pesel;
-  phone.textContent = doc.data().phone;
-  address.textContent = doc.data().address;
+// function renderUsers(doc){
+//   let tr = document.createElement('tr');
+//   let name = document.createElement('td');
+//   let surname = document.createElement('td');
+//   let pesel = document.createElement('td');
+//   let phone = document.createElement('td');
+//   let address = document.createElement('td');
+//   name.textContent = doc.data().name;
+//   surname.textContent = doc.data().surname;
+//   pesel.textContent = doc.data().pesel;
+//   phone.textContent = doc.data().phone;
+//   address.textContent = doc.data().address;
   
 
-  tr.setAttribute('data-id',doc.id);
-  tr.appendChild(name);
-  tr.appendChild(surname);
-  tr.appendChild(pesel);
-  tr.appendChild(phone);
-  tr.appendChild(address);
+//   tr.setAttribute('data-id',doc.id);
+//   tr.appendChild(name);
+//   tr.appendChild(surname);
+//   tr.appendChild(pesel);
+//   tr.appendChild(phone);
+//   tr.appendChild(address);
 
-  userTable.appendChild(tr);
-} 
+//   userTable.appendChild(tr);
+// } 
 
-const docTable = document.querySelector('#add-doctor-table');
+// const docTable = document.querySelector('#add-doctor-table');
 
-function renderDocs(doc){
-  let tr = document.createElement('tr');
-  let name = document.createElement('td');
-  let surname = document.createElement('td');
-  let specialization = document.createElement('td');
-  let img = document.createElement('img');
+// function renderDocs(doc){
+//   let tr = document.createElement('tr');
+//   let name = document.createElement('td');
+//   let surname = document.createElement('td');
+//   let specialization = document.createElement('td');
+//   let img = document.createElement('img');
 
 
-  name.textContent = doc.data().name;
-  surname.textContent = doc.data().surname;
-  specialization.textContent = doc.data().specialization
-  img.src = doc.data().img
+//   name.textContent = doc.data().name;
+//   surname.textContent = doc.data().surname;
+//   specialization.textContent = doc.data().specialization
+//   img.src = doc.data().img
 
-  tr.setAttribute('data-id',doc.id);
-  tr.appendChild(name);
-  tr.appendChild(surname);
-  tr.appendChild(specialization);
-  tr.appendChild(img);
+//   tr.setAttribute('data-id',doc.id);
+//   tr.appendChild(name);
+//   tr.appendChild(surname);
+//   tr.appendChild(specialization);
+//   tr.appendChild(img);
 
-  docTable.appendChild(tr);
-} 
+//   docTable.appendChild(tr);
+// } 
 
 const userCol = collection(db,"users")
 getDocs(userCol)
 .then((snapshot)=>{
     snapshot.docs.forEach((doc)=>{
-       renderUsers(doc)
+      //  renderUsers(doc)
     })
 })
 
@@ -80,7 +79,7 @@ const doctorCol = collection(db,"doctors")
 getDocs(doctorCol)
 .then((snapshot)=>{
   snapshot.docs.forEach((doc)=>{
-    renderDocs(doc)
+    // renderDocs(doc)
   })
 })
 

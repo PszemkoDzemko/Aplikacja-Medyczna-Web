@@ -1,6 +1,3 @@
-span{
-    padding: 0.25rem;
-}
-table,td,tr{
-    border: 1px solid black;
+form > input{
+    border-radius: 10px;
 }

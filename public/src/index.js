@@ -23,22 +23,28 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore()
 
-//sprawdzanie obecnego użytkownika
-//To trzeba wykonać tylko raz w trakcie załadowania strony
+const index = document.querySelector('#Index');
+//sprawdzanie czy jest zalogowany
+if(index){
   onAuthStateChanged(auth,(user)=>{
     if(user){
       //użytkownik jest zalogowany
       //wrzuć go na mainpage
-      
+      window.location.href='mainpage.html';
       //i pobierz jego uid
       const uid = user.uid
     }else{
-      //nie jest zalogowany to go wywal na index
-      //window.location.href='index.html';
     }
   });
-
-
+}else{
+  onAuthStateChanged(auth,(user)=>{
+    if(user){
+    }else{
+      //nie jest zalogowany to go wywal na index
+      window.location.href='index.html';
+    }
+  });
+}
 
 //Logowanie
 //pobieranie danych
@@ -53,8 +59,8 @@ if(loginButton!==null){
       //zaloguj mailem i hasłem
       signInWithEmailAndPassword(auth,email.value,password.value)
       .then((userCredential)=>{
-        window.location.href='mainpage.html';
         //po zalogowaniu przejdź na mainpage
+        window.location.href='mainpage.html';
       })
       .catch((error)=>{
         //tu są błędy jak coś nie działa np. złe hasło czy coś
@@ -73,7 +79,7 @@ if(btnSignOut!==null){
     setPersistence(auth,browserLocalPersistence)
     .then(()=>{
       signOut(auth).then(()=>{
-        chcekUserLogin();
+        window.location.href='index.html';
       }).catch((error)=>{
         //nie udało się wylogować czy coś
       })

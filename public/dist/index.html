@@ -6,32 +6,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medopek</title>
+
 </head>
 
-<body>
+<body id="Index">
 
   <form>
-    <input type="text" id="emailLogin" class="fadeIn second" name="email" placeholder="email">
-    <input type="text" id="passwordLogin" class="fadeIn third" name="email" placeholder="password">
-    <input type="button" id="btnLogin" class="fadeIn fourth" value="Log In">
+    <input type="text" id="emailLogin" name="email" placeholder="email">
+    <input type="text" id="passwordLogin" name="email" placeholder="password">
+    <input type="button" id="btnLogin" value="Log In">
   </form>
   <div id="formFooter">
-    <a class="underlineHover" href="#">Forgot Password?</a>
+    <a class="underlineHover" href="#">Forgot Password?</a><br />
+    <a class="underlineHover" href="register.html">Nie masz konta zarejestruj się</a>
   </div>
   
   <!-- Nasz JS -->
-  <script src="bundle.js">
-  onAuthStateChanged(auth,(user)=>{
-    if(user){
-      //użytkownik jest zalogowany
-      //wrzuć go na mainpage
-      window.location.href='mainpage.html';
-      //i pobierz jego uid
-      const uid = user.uid
-    }else{
-      //nie jest zalogowany to go wywal na index
-    }
-  }); </script>
+  <script src="bundle.js"></script>
+
 </body>
 
 </html>

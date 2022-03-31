@@ -5,15 +5,26 @@
     box-sizing: border-box;
 }
 
-html, body{
-    display: grid;
-    height: 100%;
-    place-items: center;
+.logo{
+    width: 80px;
+    float:right;
+    padding: 2px 15px 0px 0px;
+    
+}
+
+body{
     background-color: #75CFA9;
+    overflow: hidden;
+}
+
+.container{
+max-width: 440px;
+padding: 0 20px;
+margin: 170px auto;
 }
 
 .wrapper{
-    width: 380px;
+    width: 100%;
     background: #fff;
     border-radius: 5px;
 }
@@ -29,7 +40,7 @@ html, body{
 }
 
 .wrapper form{
-    padding: 30px 20px 25px 20px;
+    padding: 30px 25px 25px 25px;
 }
 
 .wrapper form .row{
@@ -45,6 +56,36 @@ html, body{
     outline: none;
     border-radius: 5px;
     border: 1px solid lightgrey;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.wrapper form .pass{
+    margin: -8px 0px 20px 0;
+}
+
+.wrapper form .pass a{
+    text-decoration: none;
+    font-size: 17px;
+    color: #75c8cf;
+}
+
+.wrapper form .formFooter{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 17px;
+}
+
+.wrapper form .formFooter a{
+    text-decoration: none;
+    color: #75c8cf;
+}
+.wraper form .pass a:hover{
+    text-decoration: underline;
+}
+
+.wraper form .formFooter a:hover{
+    text-decoration: underline;
 }
 
 .wrapper form .row i{
@@ -59,4 +100,22 @@ html, body{
     color: #fff;
     font-size: 18px;
     border-radius: 5px 0 0 5px;
+}
+.wrapper form .button input{
+    padding-left: 0px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 20px;
+    background: #75c8cf;
+    border: 1px solid #75c8cf;
+    cursor: pointer;
+}
+
+form .button input:hover{
+    background: #86d9df;
+}
+
+form .row input:focus{
+    border-color: #75c8cf;
+    box-shadow: inset 0px 0px 2px 2px rgba(26,188,156,0.25);
 }

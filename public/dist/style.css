@@ -6,7 +6,7 @@
 }
 
 html, body{
-    display:grid;
+    display: grid;
     height: 100%;
     place-items: center;
     background-color: #75CFA9;

@@ -6,7 +6,7 @@ import { getAuth,
   setPersistence, 
   browserLocalPersistence,
   onAuthStateChanged } from "firebase/auth";
-import { getFirestore, collection, getDocs, setDoc, addDoc, doc } from "firebase/firestore"
+import { getFirestore, collection, getDocs, setDoc, addDoc, doc, where, query } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyALxo_cxtuu6aIhrMCxmyG6ZvzcpypQSaA",
@@ -21,19 +21,20 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-const db = getFirestore()
+const db = getFirestore();
 
-
+let uid
 //Sesja-----------------------------------------------------------
 const index = document.querySelector('#Index');
 if(index){
   onAuthStateChanged(auth,(user)=>{
     if(user){
+      console.log(user)
       //użytkownik jest zalogowany
       //wrzuć go na mainpage
       window.location.href='mainpage.html';
       //i pobierz jego uid
-      const uid = user.uid
+      uid = user.uid;
     }else{
     }
   });
@@ -70,9 +71,7 @@ if(registerButton){
           localization: registerLocalization.value,
           PWZ: registerPWZ.value
         };
-        console.log(newDoc)
         setDoc(doc(db,"doctors", userCredential.user.uid),newDoc);
-        
       })
       .catch((error)=>{
         const errorCode = error.code;
@@ -109,7 +108,6 @@ if(loginButton){
 const btnSignOut = document.querySelector('#SignOutBtn');
 if(btnSignOut){
   btnSignOut.addEventListener('click',()=>{
-    console.log("elo");
     setPersistence(auth,browserLocalPersistence)
     .then(()=>{
       signOut(auth).then(()=>{
@@ -121,60 +119,35 @@ if(btnSignOut){
   })
 }
 
-// const userTable = document.querySelector('#add-users-table');
-// function renderUsers(doc){
-//   let tr = document.createElement('tr');
-//   let name = document.createElement('td');
-//   let surname = document.createElement('td');
-//   let pesel = document.createElement('td');
-//   let phone = document.createElement('td');
-//   let address = document.createElement('td');
-//   name.textContent = doc.data().name;
-//   surname.textContent = doc.data().surname;
-//   pesel.textContent = doc.data().pesel;
-//   phone.textContent = doc.data().phone;
-//   address.textContent = doc.data().address;
-//   tr.setAttribute('data-id',doc.id);
-//   tr.appendChild(name);
-//   tr.appendChild(surname);
-//   tr.appendChild(pesel);
-//   tr.appendChild(phone);
-//   tr.appendChild(address);
-//   userTable.appendChild(tr);
-// } 
-// const docTable = document.querySelector('#add-doctor-table');
-// function renderDocs(doc){
-//   let tr = document.createElement('tr');
-//   let name = document.createElement('td');
-//   let surname = document.createElement('td');
-//   let specialization = document.createElement('td');
-//   let img = document.createElement('img');
-//   name.textContent = doc.data().name;
-//   surname.textContent = doc.data().surname;
-//   specialization.textContent = doc.data().specialization
-//   img.src = doc.data().img
-//   tr.setAttribute('data-id',doc.id);
-//   tr.appendChild(name);
-//   tr.appendChild(surname);
-//   tr.appendChild(specialization);
-//   tr.appendChild(img);
-//   docTable.appendChild(tr);
-// } 
 
-const userCol = collection(db,"users")
-getDocs(userCol)
-.then((snapshot)=>{
-    snapshot.docs.forEach((doc)=>{
-      //  renderUsers(doc)
-    })
-})
-
-const doctorCol = collection(db,"doctors")
-getDocs(doctorCol)
-.then((snapshot)=>{
+//Wyświetalanie wizyt lekarza
+const docTable = document.querySelector('#add-doctor-table');
+function renderDocs(doc){
+  //sprawdzenie czy docTable w ogóle istnieje
+  //bo jak nie jesteśmy zalogowani to nie istnieje i będzie walić błędy
+    if(docTable){
+    let tr = document.createElement('tr');
+    let data = document.createElement('td');
+    let hour = document.createElement('td');
+    data.textContent = doc.data().data;
+    hour.textContent = doc.data().hour;
+    tr.setAttribute('data-id',doc.id);
+    tr.appendChild(data);
+    tr.appendChild(hour);
+    docTable.appendChild(tr);
+  }
+}
+//Pobieranie z bazy wizyt lekarza i przekazywanie do funkcji wyżej
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    //pobieranie id zalogowanego użytkownika
+    uid = user.uid;
+    //pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika
+    const doctorCol = query(collection(db,"visits"), where("id_doc","==",uid));
+  getDocs(doctorCol)
+  .then((snapshot)=>{
   snapshot.docs.forEach((doc)=>{
-    // renderDocs(doc)
+      renderDocs(doc)
   })
-})
-
-
+})}
+});

@@ -2,29 +2,41 @@
 <html lang="en">
 
 <head>
+  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medopek</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 
 <body id="Index">
-<div id="container">
-  <div class="navbar"> </div>
+<div class="wrapper">
+  <div class="title">Login</div>
   <form>
+    <div class="row">
+    <i class="fa fa-user" aria-hidden="true"></i>
     <input type="text" id="emailLogin" name="email" placeholder="email">
+  </div>
+  <div class="row">
+    <i class="fa fa-lock" aria-hidden="true"></i>
     <input type="text" id="passwordLogin" name="email" placeholder="password">
+  </div>
+  <div class="row">
     <input type="button" id="loginBtn" value="Log In">
+  </div>
   </form>
   <div id="formFooter">
+    <div class="row">
     <a class="underlineHover" href="#">Forgot Password?</a><br />
     <a class="underlineHover" href="register.html">Nie masz konta zarejestruj się</a>
   </div>
-  
+  </div>
+</div>
   <!-- Nasz JS -->
   <script src="bundle.js"></script>
-</div>
+
 </body>
 
 

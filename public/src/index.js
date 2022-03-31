@@ -6,7 +6,7 @@ import { getAuth,
   setPersistence, 
   browserLocalPersistence,
   onAuthStateChanged } from "firebase/auth";
-import { getFirestore, collection, getDocs } from "firebase/firestore"
+import { getFirestore, collection, getDocs, setDoc, addDoc, doc } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyALxo_cxtuu6aIhrMCxmyG6ZvzcpypQSaA",
@@ -23,41 +23,75 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore()
 
-const index = document.querySelector('#Index');
-//sprawdzanie czy jest zalogowany
-if(index){
-  onAuthStateChanged(auth,(user)=>{
-    if(user){
-      //użytkownik jest zalogowany
-      //wrzuć go na mainpage
-      window.location.href='mainpage.html';
-      //i pobierz jego uid
-      const uid = user.uid
-    }else{
-    }
-  });
-}else{
-  onAuthStateChanged(auth,(user)=>{
-    if(user){
-    }else{
-      //nie jest zalogowany to go wywal na index
-      window.location.href='index.html';
-    }
-  });
+
+//Sesja-----------------------------------------------------------
+// const index = document.querySelector('#Index');
+// if(index){
+//   onAuthStateChanged(auth,(user)=>{
+//     if(user){
+//       //użytkownik jest zalogowany
+//       //wrzuć go na mainpage
+//       window.location.href='mainpage.html';
+//       //i pobierz jego uid
+//       const uid = user.uid
+//     }else{
+//     }
+//   });
+// }else{
+//   onAuthStateChanged(auth,(user)=>{
+//     if(user){
+//     }else{
+//       //nie jest zalogowany to go wywal na index
+//       window.location.href='index.html';
+//     }
+//   });
+// }
+
+//Rejestracja----------------------------------------------------------
+const registerButton = document.querySelector('#registerBtn');
+const registerName = document.querySelector('#registerName');
+const registerSurname = document.querySelector('#registerSurname');
+const registerEmail = document.querySelector('#registerEmail');
+const registerPsw = document.querySelector('#registerPsw');
+const registerPswRepeat = document.querySelector('#registerPsw-repeat');
+const registerLocalization = document.querySelector('#registerLocalization');
+const registerPWZ = document.querySelector('#registerPwz');
+if(registerButton){
+  registerButton.addEventListener('click',()=>{
+      createUserWithEmailAndPassword(auth, registerEmail.value,registerPsw.value)
+      .then((userCredential)=>{
+        const newDoc = {
+          uid: userCredential.user.uid,
+          name: registerName.value,
+          surname: registerSurname.value,
+          nrRating: "0",
+          rating: "0",
+          specialization: "",
+          localization: registerLocalization.value,
+          PWZ: registerPWZ.value
+        };
+        console.log(newDoc)
+        setDoc(doc(db,"doctors", userCredential.user.uid),newDoc);
+      })
+      .catch((error)=>{
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      })
+  })
 }
 
-//Logowanie
+//Logowanie------------------------------------------------------------
 //pobieranie danych
-const loginButton = document.querySelector('#btnLogin');
-const email = document.querySelector('#emailLogin');
-const password = document.querySelector('#passwordLogin');
-if(loginButton!==null){
+const loginButton = document.querySelector('#loginBtn');
+const loginEmail = document.querySelector('#emailLogin');
+const loginPassword = document.querySelector('#passwordLogin');
+if(loginButton){
   loginButton.addEventListener('click',()=>{
     //ustaw sesję lokalną
     setPersistence(auth, browserLocalPersistence)
     .then(()=>{
       //zaloguj mailem i hasłem
-      signInWithEmailAndPassword(auth,email.value,password.value)
+      signInWithEmailAndPassword(auth,loginEmail.value,loginPassword.value)
       .then((userCredential)=>{
         //po zalogowaniu przejdź na mainpage
         window.location.href='mainpage.html';
@@ -71,9 +105,9 @@ if(loginButton!==null){
   })
 }
 
-//wyloguj się
-const btnSignOut = document.querySelector('#btnSignOut');
-if(btnSignOut!==null){
+//wyloguj się----------------------------------------------------------
+const btnSignOut = document.querySelector('#SignOutBtn');
+if(btnSignOut){
   btnSignOut.addEventListener('click',()=>{
     console.log("elo");
     setPersistence(auth,browserLocalPersistence)

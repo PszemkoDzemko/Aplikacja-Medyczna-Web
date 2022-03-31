@@ -6,7 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rejestracja</title>
 </head>
-<body>
-    
+<body id="Index">
+    <div class="container">
+        <h1>Register</h1>
+        <p>Please fill in this form to create an account.</p>
+        <hr>
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Podaj Mail" name="email" id="registerEmail" >
+        <br /><br />
+        <label for="psw"><b>Hasło</b></label>
+        <input type="text" placeholder="Podaj Hasło" name="psw" id="registerPsw" >
+        <br /><br />
+        <label for="psw-repeat"><b>Hasło jeszcze raz</b></label>
+        <input type="text" placeholder="Powtórz hasło" name="psw-repeat" id="registerPsw-repeat" >
+        <br /><br />
+        <label for="psw-repeat"><b>Imie</b></label>
+        <input type="text" placeholder="Podaj Imie" name="name" id="registerName" >
+        <br /><br />
+        <label for="psw-repeat"><b>Nazwisko</b></label>
+        <input type="text" placeholder="Podaj Imie" name="surname" id="registerSurname" >
+        <br /><br />
+        <label for="psw-repeat"><b>Adress</b></label>
+        <input type="text" placeholder="Podaj adres" name="localization" id="registerLocalization" >
+        <br /><br />
+        <label for="psw-repeat"><b>Numer PWZ</b></label>
+        <input type="text" placeholder="Podaj numer PWZ" name="pwz" id="registerPwz" >
+        <hr>
+        <button type="submit" class="registerbtn" id="registerBtn">zarejestruj</button>
+      </div>
+      <div class="container signin">
+        <p>Masz już konto? <a href="index.html">Zaloguj się</a></p>
+      </div>
+<script src="bundle.js"></script>
 </body>
 </html>

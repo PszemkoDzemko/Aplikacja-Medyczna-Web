@@ -71,7 +71,8 @@ if(registerButton){
           PWZ: registerPWZ.value
         };
         console.log(newDoc)
-        setDoc(doc(db,"doctors", userCredential.user.uid),newDoc);  
+        setDoc(doc(db,"doctors", userCredential.user.uid),newDoc);
+        
       })
       .catch((error)=>{
         const errorCode = error.code;
@@ -98,6 +99,7 @@ if(loginButton){
         //tu są błędy jak coś nie działa np. złe hasło czy coś
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log(errorMessage)
       })
     })
   })

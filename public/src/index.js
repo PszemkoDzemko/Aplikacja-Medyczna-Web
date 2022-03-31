@@ -25,27 +25,27 @@ const db = getFirestore()
 
 
 //Sesja-----------------------------------------------------------
-// const index = document.querySelector('#Index');
-// if(index){
-//   onAuthStateChanged(auth,(user)=>{
-//     if(user){
-//       //użytkownik jest zalogowany
-//       //wrzuć go na mainpage
-//       window.location.href='mainpage.html';
-//       //i pobierz jego uid
-//       const uid = user.uid
-//     }else{
-//     }
-//   });
-// }else{
-//   onAuthStateChanged(auth,(user)=>{
-//     if(user){
-//     }else{
-//       //nie jest zalogowany to go wywal na index
-//       window.location.href='index.html';
-//     }
-//   });
-// }
+const index = document.querySelector('#Index');
+if(index){
+  onAuthStateChanged(auth,(user)=>{
+    if(user){
+      //użytkownik jest zalogowany
+      //wrzuć go na mainpage
+      window.location.href='mainpage.html';
+      //i pobierz jego uid
+      const uid = user.uid
+    }else{
+    }
+  });
+}else{
+  onAuthStateChanged(auth,(user)=>{
+    if(user){
+    }else{
+      //nie jest zalogowany to go wywal na index
+      window.location.href='index.html';
+    }
+  });
+}
 
 //Rejestracja----------------------------------------------------------
 const registerButton = document.querySelector('#registerBtn');
@@ -93,8 +93,6 @@ if(loginButton){
       //zaloguj mailem i hasłem
       signInWithEmailAndPassword(auth,loginEmail.value,loginPassword.value)
       .then((userCredential)=>{
-        //po zalogowaniu przejdź na mainpage
-        window.location.href='mainpage.html';
       })
       .catch((error)=>{
         //tu są błędy jak coś nie działa np. złe hasło czy coś

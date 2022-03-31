@@ -71,7 +71,7 @@ if(registerButton){
           PWZ: registerPWZ.value
         };
         console.log(newDoc)
-        setDoc(doc(db,"doctors", userCredential.user.uid),newDoc);
+        setDoc(doc(db,"doctors", userCredential.user.uid),newDoc);  
       })
       .catch((error)=>{
         const errorCode = error.code;

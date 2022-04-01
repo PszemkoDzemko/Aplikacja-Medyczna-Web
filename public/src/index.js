@@ -62,9 +62,11 @@ const registerEmail = document.querySelector('#registerEmail');
 const registerPsw = document.querySelector('#registerPsw');
 const registerPswRepeat = document.querySelector('#registerPsw-repeat');
 const registerLocalization = document.querySelector('#registerLocalization');
+const registerSpecialization = document.querySelector('#registerSpec');
 const registerPWZ = document.querySelector('#registerPwz');
   if(registerButton){
     registerButton.addEventListener('click',()=>{
+      if(registerPsw.value === registerPswRepeat.value){
         createUserWithEmailAndPassword(auth, registerEmail.value,registerPsw.value)
         .then((userCredential)=>{
           addDoctorDetails(userCredential.user.uid)
@@ -76,6 +78,10 @@ const registerPWZ = document.querySelector('#registerPwz');
           const errorMessage = error.message;
           console.log(errorMessage)
         })
+      }else{
+        //błąd hasła nie są takie same
+        console.log("hasła nie są takie same")
+      }
     })
   }
   async function addDoctorDetails(id){
@@ -85,7 +91,7 @@ const registerPWZ = document.querySelector('#registerPwz');
       surname: registerSurname.value,
       nrRating: "0",
       rating: "0", 
-      specialization: "",
+      specialization: registerSpecialization.value,
       localization: registerLocalization.value,
       PWZ: registerPWZ.value
     };

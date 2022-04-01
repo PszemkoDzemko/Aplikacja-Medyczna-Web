@@ -106,6 +106,8 @@ if(loginButton){
       //zaloguj mailem i hasłem
       signInWithEmailAndPassword(auth,loginEmail.value,loginPassword.value)
       .then((userCredential)=>{
+        //tu trzeba sprawdzić czy istnieje taki lekarz i jak nie to wylogować gościa
+        //albo dać opcje założenia konta lekarza
       })
       .catch((error)=>{
         //tu są błędy jak coś nie działa np. złe hasło czy coś

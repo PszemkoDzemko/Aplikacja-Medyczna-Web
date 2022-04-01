@@ -13,7 +13,7 @@
 }
 
 body{
-    background-color: #75CFA9;
+    background: linear-gradient(90deg,red,blue);
     overflow: hidden;
 }
 

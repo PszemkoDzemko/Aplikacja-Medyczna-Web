@@ -7,27 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <title>Medopek</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <h1>Witaj</h1>
-    <table id="add-doctor-table">
-        <tbody>
-            <tr>
-                <td>Data</td>
-                <td>Godzina</td>
-            </tr>
-        </tbody>
-    </table>
-    <br />
-    <button id="SignOutBtn">Wyloguj się</button>
+    <div class="topnav">
+        <a class="active" target="iframe" href="pages/visits.html">Wizyty</a>
+        <a target="iframe" href="#news">Cos</a>
+        <a target="iframe" href="#contact">Cos</a>
+        <a target="iframe" href="#about">cos</a>
+        <button style="float: left;" id="SignOutBtn">Wyloguj się</button>
+    </div>
 
-    <style>
-        table,
-        td {
-            border: 1px solid black;
-        }
-    </style>
+    <div class="main">
+        <iframe class="iframe" src="pages/visits.html" name="iframe" frameborder="0"></iframe>
+    </div>
+
+
     <script src="bundle.js"></script>
 </body>
 

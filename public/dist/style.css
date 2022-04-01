@@ -43,7 +43,7 @@ body {
     outline: none;
     border-radius: 5px;
     border: 1px solid lightgrey;
-    font-size: 16px;
+    font-size: 1.5em;
     transition: all 0.3s ease;
     background-color: var(--glowny-kolor-tla);
     color: #fff;
@@ -62,7 +62,7 @@ body {
     padding-left: 20px;
     border-radius: 5px 5px 0 0;
     color: #fff;
-    font-size: 25px;
+    font-size: 2em;
     font-weight: 600;
 }
 
@@ -72,7 +72,7 @@ body {
     padding-left: 20px;
     border-radius: 5px 5px 0 0;
     color: #fff;
-    font-size: 25px;
+    font-size: 2rem;
     font-weight: 600;
     margin-bottom: 10px;
 }
@@ -95,7 +95,7 @@ body {
     outline: none;
     border-radius: 5px;
     border: 1px solid lightgrey;
-    font-size: 16px;
+    font-size: 1rem;
     transition: all 0.3s ease;
 }
 
@@ -105,14 +105,14 @@ body {
 
 .wrapper form .pass a {
     text-decoration: none;
-    font-size: 17px;
+    font-size: 1em;
     color: var(--glowny-kolor-tla);
 }
 
 .wrapper form .formFooter {
     text-align: center;
     margin-top: 20px;
-    font-size: 17px;
+    font-size: 1em;
 }
 
 .wrapper form .formFooter a {
@@ -138,7 +138,7 @@ body {
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 18px;
+    font-size: 1em;
     border-radius: 5px 0 0 5px;
 }
 
@@ -146,7 +146,7 @@ body {
     padding-left: 0px;
     color: #fff;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1em;
     background: var(--glowny-kolor-tla);
     border: 1px solid var(--glowny-kolor-tla);
     cursor: pointer;
@@ -178,23 +178,28 @@ label {
 .topnav {
     background-color: #ddd;
     overflow: hidden;
-  }
-  
-  .topnav a {
+}
+
+.topnav a {
     float: left;
     color: #252525;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    font-size: 17px;
-  }
-  
-  .topnav a:hover {
-    background-color: rgba(26, 188, 156, 0.25);
+    font-size: 1em;
+}
+
+.topnav a:hover {
+    background-color: rgba(19, 136, 113, 0.5);
     color: black;
-  }
-  
-  .topnav a.active {
-    background-color: var(--glowny-kolor-tla);;
+}
+
+.topnav a.active {
+    background-color: var(--glowny-kolor-tla);
+    ;
     color: white;
-  }
+}
+
+.iframe {
+    width: 100%;
+}

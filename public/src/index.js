@@ -23,11 +23,10 @@ const firebaseConfig = {
   appId: "1:1027058281878:web:34445352cd5508e0c581b7",
   measurementId: "G-VB8LW8MP2F"
 };
-
+//inicjalizacja firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
-
 
 //Sesja-----------------------------------------------------------
 const index = document.querySelector('#Index');
@@ -141,13 +140,13 @@ if (pswResetBtn) {
         window.location.href = 'login.html';
       })
       .catch((error) => {
+        //błedy do przesłania i wyświetlania w jakimś div
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage)
       });
   })
 }
-
 
 //wyloguj się----------------------------------------------------------
 const btnSignOut = document.querySelector('#SignOutBtn');
@@ -159,11 +158,12 @@ if (btnSignOut) {
           window.location.href = 'index.html';
         }).catch((error) => {
           //nie udało się wylogować czy coś
+          const errorCode = error.code;
+          const errorMessage = error.message;
         })
       })
   })
 }
-
 
 //Wyświetalanie wizyt lekarza
 const docTable = document.querySelector('#add-doctor-table');

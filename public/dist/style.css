@@ -166,7 +166,7 @@ label{
 .row .spec{
     margin-top: 10px;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 2px;
     background: var(--glowny-kolor-tla);
     border: 1px solid var(--glowny-kolor-tla);
     color:#fff;

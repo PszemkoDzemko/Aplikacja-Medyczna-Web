@@ -165,6 +165,7 @@ label{
 
 .row .spec{
     margin-top: 10px;
+    min-height: 30px;
     width: 100%;
     border-radius: 2px;
     background: var(--glowny-kolor-tla);

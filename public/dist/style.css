@@ -59,6 +59,7 @@ margin: 170px auto;
     font-weight: 600;
 }
 
+
 .wrapper form{
     padding: 30px 25px 25px 25px;
 }
@@ -105,23 +106,6 @@ margin: 170px auto;
 }
 
 .wraper form .formFooter a:hover{
-    text-decoration: underline;
-}
-
-/* register */
-
-.wrapper2 form .formFooter{
-    text-align: center;
-    margin-top: 20px;
-    font-size: 17px;
-}
-
-.wrapper2 form .formFooter a{
-    text-decoration: none;
-    color: #75c8cf;
-}
-
-.wraper2 form .formFooter a:hover{
     text-decoration: underline;
 }
 

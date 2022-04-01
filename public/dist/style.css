@@ -174,3 +174,27 @@ label {
     border: 1px solid var(--glowny-kolor-tla);
     color: #fff;
 }
+
+.topnav {
+    background-color: #ddd;
+    overflow: hidden;
+  }
+  
+  .topnav a {
+    float: left;
+    color: #252525;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: rgba(26, 188, 156, 0.25);
+    color: black;
+  }
+  
+  .topnav a.active {
+    background-color: var(--glowny-kolor-tla);;
+    color: white;
+  }

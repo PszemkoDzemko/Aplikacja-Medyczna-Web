@@ -59,6 +59,17 @@ margin: 170px auto;
     font-weight: 600;
 }
 
+.wrapper .title2{
+    line-height: 80px;
+    background: #75c8cf;
+    padding-left: 20px;
+    border-radius: 5px 5px 0 0;
+    color:#fff;
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
 
 .wrapper form{
     padding: 30px 25px 25px 25px;
@@ -139,4 +150,8 @@ form .button input:hover{
 form .row input:focus{
     border-color: #75c8cf;
     box-shadow: inset 0px 0px 2px 2px rgba(26,188,156,0.25);
+}
+
+label{
+    margin-top:20px;
 }

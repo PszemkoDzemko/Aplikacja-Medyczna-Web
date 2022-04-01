@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rejestracja</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body id="Index">
-    <div class="container">
+<div class="containerReg">
 <div class="wrapper">
   <form action="#">
         <h1>Register</h1>
@@ -16,36 +17,45 @@
         <hr>
         <div class="row">
         <label for="email"><b>Email</b></label>
+        <i class="fa fa-user" aria-hidden="true"></i>
         <input type="text" placeholder="Podaj Mail" name="email" id="registerEmail" >
       </div>
       <div class="row">
         <label for="psw"><b>Hasło</b></label>
+        <i class="fa fa-lock" aria-hidden="true"></i>
         <input type="text" placeholder="Podaj Hasło" name="psw" id="registerPsw" >
         </div>
         <div class="row">
         <label for="psw-repeat"><b>Hasło jeszcze raz</b></label>
+        <i class="fa fa-lock" aria-hidden="true"></i>
         <input type="text" placeholder="Powtórz hasło" name="psw-repeat" id="registerPsw-repeat" >
         </div>
         <div class="row">
         <label for="psw-repeat"><b>Imie</b></label>
+        <i class="fa fa-user-circle" aria-hidden="true"></i>
         <input type="text" placeholder="Podaj Imie" name="name" id="registerName" >
         </div>
         <div class="row">
         <label for="psw-repeat"><b>Nazwisko</b></label>
+        <i class="fa fa-user-circle" aria-hidden="true"></i>
         <input type="text" placeholder="Podaj Imie" name="surname" id="registerSurname" >
         </div>
         <div class="row">
         <label for="psw-repeat"><b>Adress</b></label>
+        <i class="fa fa-home" aria-hidden="true"></i>
         <input type="text" placeholder="Podaj adres" name="localization" id="registerLocalization" >
         </div>
         <div class="row">
         <label for="psw-repeat"><b>Numer PWZ</b></label>
+        <i class="fa fa-address-card" aria-hidden="true"></i>
         <input type="text" placeholder="Podaj numer PWZ" name="pwz" id="registerPwz" >
         </div>
-        <hr>
-        <button type="submit" class="registerbtn" id="registerBtn">zarejestruj</button>
-      <div class="row">
-        <p>Masz już konto? <a href="index.html">Zaloguj się</a></p>
+        <div class="row button">
+        <button type="submit" class="registerBttn" id="registerBtn">Zarejestruj</button>
+        </div>
+        <div class="row">
+          <p>Masz już konto? <a href="index.html">Zaloguj się</a></p>
+        </div>
       </div>
     </form>
     </div>

@@ -23,6 +23,24 @@ padding: 0 20px;
 margin: 170px auto;
 }
 
+.containerReg{
+    max-width: 440px;
+    padding: 0px 20px;
+    margin: 50px auto;
+}
+
+.registerBttn{
+    margin-top: 10px;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+
 .wrapper{
     width: 100%;
     background: #fff;

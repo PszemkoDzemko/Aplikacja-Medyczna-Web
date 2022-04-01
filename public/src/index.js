@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app"
 import { getAuth, 
   signInWithEmailAndPassword, 
@@ -5,8 +6,9 @@ import { getAuth,
   signOut, 
   setPersistence, 
   browserLocalPersistence,
-  onAuthStateChanged } from "firebase/auth";
-import { getFirestore, collection, getDocs, setDoc, addDoc, doc, where, query } from "firebase/firestore"
+  onAuthStateChanged,
+  sendEmailVerification } from "firebase/auth";
+import { getFirestore, collection, getDocs, setDoc, doc, where, query } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyALxo_cxtuu6aIhrMCxmyG6ZvzcpypQSaA",
@@ -23,9 +25,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 
-let uid
+
 //Sesja-----------------------------------------------------------
 const index = document.querySelector('#Index');
+const register = document.querySelector('#register');
 if(index){
   onAuthStateChanged(auth,(user)=>{
     if(user){
@@ -33,12 +36,15 @@ if(index){
       //użytkownik jest zalogowany
       //wrzuć go na mainpage
       window.location.href='mainpage.html';
-      //i pobierz jego uid
-      uid = user.uid;
     }else{
     }
   });
-}else{
+}else if(register){
+  onAuthStateChanged(auth,(user)=>{
+  if(user){
+}else{}
+});}
+else{
   onAuthStateChanged(auth,(user)=>{
     if(user){
     }else{
@@ -57,28 +63,35 @@ const registerPsw = document.querySelector('#registerPsw');
 const registerPswRepeat = document.querySelector('#registerPsw-repeat');
 const registerLocalization = document.querySelector('#registerLocalization');
 const registerPWZ = document.querySelector('#registerPwz');
-if(registerButton){
-  registerButton.addEventListener('click',()=>{
-      createUserWithEmailAndPassword(auth, registerEmail.value,registerPsw.value)
-      .then((userCredential)=>{
-        const newDoc = {
-          uid: userCredential.user.uid,
-          name: registerName.value,
-          surname: registerSurname.value,
-          nrRating: "0",
-          rating: "0",
-          specialization: "",
-          localization: registerLocalization.value,
-          PWZ: registerPWZ.value
-        };
-        setDoc(doc(db,"doctors", userCredential.user.uid),newDoc);
-      })
-      .catch((error)=>{
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      })
-  })
-}
+  if(registerButton){
+    registerButton.addEventListener('click',()=>{
+        createUserWithEmailAndPassword(auth, registerEmail.value,registerPsw.value)
+        .then((userCredential)=>{
+          addDoctorDetails(userCredential.user.uid)
+          sendEmailVerification(userCredential.user)
+          .then(()=>{})
+        })
+        .catch((error)=>{
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        })
+    })
+  }
+  async function addDoctorDetails(id){
+    const newDoc = {
+      uid: id,
+      name: registerName.value,
+      surname: registerSurname.value,
+      nrRating: "0",
+      rating: "0", 
+      specialization: "",
+      localization: registerLocalization.value,
+      PWZ: registerPWZ.value
+    };
+    console.log(newDoc)
+    await setDoc(doc(db,"doctors", id),newDoc);
+    window.location.href='mainpage.html';
+  }
 
 //Logowanie------------------------------------------------------------
 //pobieranie danych
@@ -141,7 +154,7 @@ function renderDocs(doc){
 onAuthStateChanged(auth,(user)=>{
   if(user){
     //pobieranie id zalogowanego użytkownika
-    uid = user.uid;
+    const uid = user.uid;
     //pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika
     const doctorCol = query(collection(db,"visits"), where("id_doc","==",uid));
   getDocs(doctorCol)

@@ -1,3 +1,7 @@
+:root{
+    --glowny-kolor-tla: #148A96;
+  }
+
 *{
     padding:0px;
     margin:0px;
@@ -40,7 +44,7 @@ margin: 170px auto;
     border: 1px solid lightgrey;
     font-size: 16px;
     transition: all 0.3s ease;
-    background-color: #75c8cf;
+    background-color: var(--glowny-kolor-tla);
     color:#fff;
 }
 
@@ -53,7 +57,7 @@ margin: 170px auto;
 
 .wrapper .title{
     line-height: 80px;
-    background: #75c8cf;
+    background: var(--glowny-kolor-tla);
     padding-left: 20px;
     border-radius: 5px 5px 0 0;
     color:#fff;
@@ -63,7 +67,7 @@ margin: 170px auto;
 
 .wrapper .title2{
     line-height: 80px;
-    background: #75c8cf;
+    background: var(--glowny-kolor-tla);
     padding-left: 20px;
     border-radius: 5px 5px 0 0;
     color:#fff;
@@ -101,7 +105,7 @@ margin: 170px auto;
 .wrapper form .pass a{
     text-decoration: none;
     font-size: 17px;
-    color: #75c8cf;
+    color: var(--glowny-kolor-tla);
 }
 
 .wrapper form .formFooter{
@@ -112,7 +116,7 @@ margin: 170px auto;
 
 .wrapper form .formFooter a{
     text-decoration: none;
-    color: #75c8cf;
+    color: var(--glowny-kolor-tla);
 }
 .wraper form .pass a:hover{
     text-decoration: underline;
@@ -126,8 +130,8 @@ margin: 170px auto;
     position: absolute;
     width: 47px;
     height: 100%;
-    background: #75c8cf;
-    border: 1px solid #75c8cf;
+    background: var(--glowny-kolor-tla);
+    border: 1px solid var(--glowny-kolor-tla);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -140,17 +144,17 @@ margin: 170px auto;
     color: #fff;
     font-weight: 500;
     font-size: 20px;
-    background: #75c8cf;
-    border: 1px solid #75c8cf;
+    background: var(--glowny-kolor-tla);
+    border: 1px solid var(--glowny-kolor-tla);
     cursor: pointer;
 }
 
 form .button input:hover{
-    background: #86d9df;
+    background: var(--glowny-kolor-tla);
 }
 
 form .row input:focus{
-    border-color: #75c8cf;
+    border-color: var(--glowny-kolor-tla);
     box-shadow: inset 0px 0px 2px 2px rgba(26,188,156,0.25);
 }
 

@@ -13,13 +13,9 @@
 }
 
 body{
-<<<<<<< HEAD
     /* background-color: #75CFA9; */
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
-=======
-    background: linear-gradient(90deg,red,blue);
->>>>>>> a943d3553311b43652ddd78ec6007f7e80de1cca
     overflow: hidden;
 }
 

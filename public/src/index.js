@@ -118,6 +118,8 @@ if (loginButton) {
           .then((userCredential) => {
             //tu trzeba sprawdzić czy istnieje taki lekarz i jak nie to wylogować gościa
             //albo dać opcje założenia konta lekarza
+            //w sensie sparawdzacie czy w kolekcji lekarzy istnieje dokument o id userCredential.user.uid jak istnieje to spoko a jak nie to szybki singout
+            //i można przenieść na jakąś stronę czy coś
           })
           .catch((error) => {
             //tu są błędy jak coś nie działa np. złe hasło czy coś
@@ -191,9 +193,17 @@ onAuthStateChanged(auth, (user) => {
     const doctorCol = query(collection(db, "visits"), where("id_doc", "==", uid));
     getDocs(doctorCol)
       .then((snapshot) => {
+        //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
         snapshot.docs.forEach((doc) => {
           renderDocs(doc)
         })
       })
   }
 });
+
+//Trzeba zrobić funkcję wyświetlającą błedy która tworzy jakiegoś diva albo dodaje do istniejącegoi przesyła mu error message
+//ewentualnie zmiana opcji display z none na block i się wtedy pojawi div
+
+//co do wyświetlania innych rzeczy to na górze miacie wyświetlanie w tabelce wizyt danego lekarza 
+//możecie tam stworzyć przycisk i za jego pomocą wywołać coś na danym elemencie np szczegóły otwieracie nowego html 
+//i przesyłacie do podobnej funkcji tworzącej elementy danego 'doc' w sensie dokument 

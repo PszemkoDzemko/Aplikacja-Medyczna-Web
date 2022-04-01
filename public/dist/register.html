@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rejestracja</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<<<<<<< HEAD
 <body id="register">
     <div class="container">
         <h1>Register</h1>
@@ -15,28 +18,62 @@
         <input type="text" placeholder="Podaj Mail" name="email" id="registerEmail" >
         <br /><br />
         <label for="psw"><b>Hasło</b></label>
+=======
+<body id="Index">
+<div class="containerReg">
+<div class="wrapper">
+  <form>
+    <div class="title2">Rejestracja <img src="images/logo.svg" class="logo"> 
+    </div>
+        <div class="row">
+        <!-- <label for="email"><b>E-mail</b></label> -->
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <input type="text" placeholder="Podaj adres e-mail" name="email" id="registerEmail" >
+      </div>
+      <div class="row">
+        <!-- <label for="psw"><b>Hasło</b></label> -->
+        <i class="fa fa-lock" aria-hidden="true"></i>
+>>>>>>> 50b7947fd8bc04646a7a7267a5d067d787c23846
         <input type="text" placeholder="Podaj Hasło" name="psw" id="registerPsw" >
-        <br /><br />
-        <label for="psw-repeat"><b>Hasło jeszcze raz</b></label>
+        </div>
+        <div class="row">
+        <!-- <label for="psw-repeat"><b>Hasło jeszcze raz</b></label> -->
+        <i class="fa fa-lock" aria-hidden="true"></i>
         <input type="text" placeholder="Powtórz hasło" name="psw-repeat" id="registerPsw-repeat" >
-        <br /><br />
-        <label for="psw-repeat"><b>Imie</b></label>
-        <input type="text" placeholder="Podaj Imie" name="name" id="registerName" >
-        <br /><br />
-        <label for="psw-repeat"><b>Nazwisko</b></label>
-        <input type="text" placeholder="Podaj Imie" name="surname" id="registerSurname" >
-        <br /><br />
-        <label for="psw-repeat"><b>Adress</b></label>
+        </div>
+        <div class="row">
+        <!-- <label for="psw-repeat"><b>Imie</b></label> -->
+        <i class="fa fa-user-circle" aria-hidden="true"></i>
+        <input type="text" placeholder="Podaj imie" name="name" id="registerName" >
+        </div>
+        <div class="row">
+        <!-- <label for="psw-repeat"><b>Nazwisko</b></label> -->
+        <i class="fa fa-user-circle" aria-hidden="true"></i>
+        <input type="text" placeholder="Podaj nazwisko" name="surname" id="registerSurname" >
+        </div>
+        <div class="row">
+        <!-- <label for="psw-repeat"><b>Adress</b></label> -->
+        <i class="fa fa-home" aria-hidden="true"></i>
         <input type="text" placeholder="Podaj adres" name="localization" id="registerLocalization" >
-        <br /><br />
-        <label for="psw-repeat"><b>Numer PWZ</b></label>
+        </div>
+        <div class="row">
+        <!-- <label for="psw-repeat"><b>Numer PWZ</b></label> -->
+        <i class="fa fa-address-card" aria-hidden="true"></i>
         <input type="text" placeholder="Podaj numer PWZ" name="pwz" id="registerPwz" >
-        <hr>
-        <button type="submit" class="registerbtn" id="registerBtn">zarejestruj</button>
+        </div>
+        <div class="row button">
+        <button type="submit" class="registerBttn" id="registerBtn">Zarejestruj</button>
+        </div>
+        <div class="row">
+          <div class="formFooter">
+          Masz już konto? <a href="index.html">Zaloguj się</a>
+        </div>
+        </div>
       </div>
-      <div class="container signin">
-        <p>Masz już konto? <a href="index.html">Zaloguj się</a></p>
-      </div>
+    </form>
+    </div>
+    </div>
+    
 <script src="bundle.js"></script>
 </body>
 </html>

@@ -33,7 +33,7 @@ margin: 170px auto;
 .containerReg{
     max-width: 440px;
     padding: 0px 20px;
-    margin: 30px auto;
+    margin: 0px auto;
 }
 
 .registerBttn{
@@ -161,4 +161,13 @@ form .row input:focus{
 
 label{
     margin-top:20px;
+}
+
+.row .spec{
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 5px;
+    background: var(--glowny-kolor-tla);
+    border: 1px solid var(--glowny-kolor-tla);
+    color:#fff;
 }

@@ -1,77 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rejestracja</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rejestracja</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
+
 <body id="register">
-<div class="containerReg">
-<div class="wrapper">
-  <form action="javascript:void(0);">
-    <div class="title2">Rejestracja <img src="images/logo4.png" class="logo"> 
-    </div>
-        <div class="row">
-        <!-- <label for="email"><b>E-mail</b></label> -->
-        <i class="fa fa-user" aria-hidden="true"></i>
-        <input type="text" placeholder="Podaj adres e-mail" name="email" id="registerEmail" >
-      </div>
-      <div class="row">
-        <!-- <label for="psw"><b>Hasło</b></label> -->
-        <i class="fa fa-lock" aria-hidden="true"></i>
-        <input type="password" placeholder="Podaj Hasło" name="psw" id="registerPsw" >
+  <div class="containerReg">
+    <div class="wrapper">
+      <form action="javascript:void(0);">
+        <div class="title2">Rejestracja <img src="images/logo4.png" class="logo">
         </div>
         <div class="row">
-        <!-- <label for="psw-repeat"><b>Hasło jeszcze raz</b></label> -->
-        <i class="fa fa-lock" aria-hidden="true"></i>
-        <input type="password" placeholder="Powtórz hasło" name="psw-repeat" id="registerPsw-repeat" >
+          <!-- <label for="email"><b>E-mail</b></label> -->
+          <i class="fa fa-user" aria-hidden="true"></i>
+          <input type="text" placeholder="Podaj adres e-mail" name="email" id="registerEmail">
         </div>
         <div class="row">
-        <!-- <label for="psw-repeat"><b>Imie</b></label> -->
-        <i class="fa fa-user-circle" aria-hidden="true"></i>
-        <input type="text" placeholder="Podaj imie" name="name" id="registerName" >
+          <!-- <label for="psw"><b>Hasło</b></label> -->
+          <i class="fa fa-lock" aria-hidden="true"></i>
+          <input type="password" placeholder="Podaj Hasło" name="psw" id="registerPsw">
         </div>
         <div class="row">
-        <!-- <label for="psw-repeat"><b>Nazwisko</b></label> -->
-        <i class="fa fa-user-circle" aria-hidden="true"></i>
-        <input type="text" placeholder="Podaj nazwisko" name="surname" id="registerSurname" >
+          <!-- <label for="psw-repeat"><b>Hasło jeszcze raz</b></label> -->
+          <i class="fa fa-lock" aria-hidden="true"></i>
+          <input type="password" placeholder="Powtórz hasło" name="psw-repeat" id="registerPsw-repeat">
         </div>
         <div class="row">
-        <!-- <label for="psw-repeat"><b>Adress</b></label> -->
-        <i class="fa fa-home" aria-hidden="true"></i>
-        <input type="text" placeholder="Podaj adres" name="localization" id="registerLocalization" >
+          <!-- <label for="psw-repeat"><b>Imie</b></label> -->
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+          <input type="text" placeholder="Podaj imie" name="name" id="registerName">
         </div>
         <div class="row">
-        <!-- <label for="psw-repeat"><b>Numer PWZ</b></label> -->
-        <i class="fa fa-address-card" aria-hidden="true"></i>
-        <input type="text" placeholder="Podaj numer PWZ" name="pwz" id="registerPwz" >
+          <!-- <label for="psw-repeat"><b>Nazwisko</b></label> -->
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+          <input type="text" placeholder="Podaj nazwisko" name="surname" id="registerSurname">
+        </div>
+        <div class="row">
+          <!-- <label for="psw-repeat"><b>Adress</b></label> -->
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <input type="text" placeholder="Podaj adres" name="localization" id="registerLocalization">
+        </div>
+        <div class="row">
+          <!-- <label for="psw-repeat"><b>Numer PWZ</b></label> -->
+          <i class="fa fa-address-card" aria-hidden="true"></i>
+          <input type="text" placeholder="Podaj numer PWZ" name="pwz" id="registerPwz">
         </div>
         <div class="row">
           <label for="docSpec">Wybierz specjalizacje:</label>
-            <select name="docSpec" id="registerSpec" class="spec">
-              <option value="Ginekolog">Ginekolog</option>
-              <option value="Onkolog">Onkolog</option>
-              <option value="Neurolog">Neurolog</option>
-              <option value="Ortopeda">Ortopeda</option>
-            </select>
+          <select name="docSpec" id="registerSpec" class="spec">
+            <option value="Ginekolog">Ginekolog</option>
+            <option value="Onkolog">Onkolog</option>
+            <option value="Neurolog">Neurolog</option>
+            <option value="Ortopeda">Ortopeda</option>
+          </select>
         </div>
         <div class="row button">
-        <button type="submit" class="registerBttn" id="registerBtn">Zarejestruj</button>
+          <button type="submit" class="registerBttn" id="registerBtn">Zarejestruj</button>
         </div>
         <div class="row">
           <div class="formFooter">
-          Masz już konto? <a href="login.html">Zaloguj się</a>
+            Masz już konto? <a href="login.html">Zaloguj się</a>
+          </div>
         </div>
-        </div>
-      </div>
+    </div>
     </form>
-    </div>
-    </div>
-    
-<script src="bundle.js"></script>
+  </div>
+  </div>
+
+  <script src="bundle.js"></script>
 </body>
+
 </html>

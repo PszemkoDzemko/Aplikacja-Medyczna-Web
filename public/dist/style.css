@@ -1,42 +1,42 @@
-:root{
+:root {
     --glowny-kolor-tla: #148A96;
-  }
+}
 
-*{
-    padding:0px;
-    margin:0px;
+* {
+    padding: 0px;
+    margin: 0px;
     font-family: sans-serif;
     box-sizing: border-box;
 }
 
-.logo{
+.logo {
     width: 80px;
-    float:right;
+    float: right;
     padding: 8px 15px 0px 0px;
     filter: drop-shadow(1px 1px 1px #4444dd);
-    
+
 }
 
-body{
+body {
     /* background-color: #75CFA9; */
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
     overflow: hidden;
 }
 
-.container{
-max-width: 440px;
-padding: 0 20px;
-margin: 170px auto;
+.container {
+    max-width: 440px;
+    padding: 0 20px;
+    margin: 170px auto;
 }
 
-.containerReg{
+.containerReg {
     max-width: 440px;
     padding: 50px 20px;
     margin: 0px auto;
 }
 
-.registerBttn{
+.registerBttn {
     margin-top: 10px;
     height: 100%;
     width: 100%;
@@ -46,49 +46,49 @@ margin: 170px auto;
     font-size: 16px;
     transition: all 0.3s ease;
     background-color: var(--glowny-kolor-tla);
-    color:#fff;
+    color: #fff;
 }
 
 
-.wrapper{
+.wrapper {
     width: 100%;
     background: #fff;
     border-radius: 5px;
 }
 
-.wrapper .title{
+.wrapper .title {
     line-height: 80px;
     background: var(--glowny-kolor-tla);
     padding-left: 20px;
     border-radius: 5px 5px 0 0;
-    color:#fff;
+    color: #fff;
     font-size: 25px;
     font-weight: 600;
 }
 
-.wrapper .title2{
+.wrapper .title2 {
     line-height: 80px;
     background: var(--glowny-kolor-tla);
     padding-left: 20px;
     border-radius: 5px 5px 0 0;
-    color:#fff;
+    color: #fff;
     font-size: 25px;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
 
-.wrapper form{
+.wrapper form {
     padding: 30px 25px 25px 25px;
 }
 
-.wrapper form .row{
+.wrapper form .row {
     height: 45px;
-    margin-bottom:15px;
+    margin-bottom: 15px;
     position: relative;
 }
 
-.wrapper form .row input{
+.wrapper form .row input {
     height: 100%;
     width: 100%;
     padding-left: 60px;
@@ -99,35 +99,36 @@ margin: 170px auto;
     transition: all 0.3s ease;
 }
 
-.wrapper form .pass{
+.wrapper form .pass {
     margin: -8px 0px 20px 0;
 }
 
-.wrapper form .pass a{
+.wrapper form .pass a {
     text-decoration: none;
     font-size: 17px;
     color: var(--glowny-kolor-tla);
 }
 
-.wrapper form .formFooter{
+.wrapper form .formFooter {
     text-align: center;
     margin-top: 20px;
     font-size: 17px;
 }
 
-.wrapper form .formFooter a{
+.wrapper form .formFooter a {
     text-decoration: none;
     color: var(--glowny-kolor-tla);
 }
-.wraper form .pass a:hover{
+
+.wraper form .pass a:hover {
     text-decoration: underline;
 }
 
-.wraper form .formFooter a:hover{
+.wraper form .formFooter a:hover {
     text-decoration: underline;
 }
 
-.wrapper form .row i{
+.wrapper form .row i {
     position: absolute;
     width: 47px;
     height: 100%;
@@ -140,7 +141,8 @@ margin: 170px auto;
     font-size: 18px;
     border-radius: 5px 0 0 5px;
 }
-.wrapper form .button input{
+
+.wrapper form .button input {
     padding-left: 0px;
     color: #fff;
     font-weight: 500;
@@ -150,25 +152,25 @@ margin: 170px auto;
     cursor: pointer;
 }
 
-form .button input:hover{
+form .button input:hover {
     background: var(--glowny-kolor-tla);
 }
 
-form .row input:focus{
+form .row input:focus {
     border-color: var(--glowny-kolor-tla);
-    box-shadow: inset 0px 0px 2px 2px rgba(26,188,156,0.25);
+    box-shadow: inset 0px 0px 2px 2px rgba(26, 188, 156, 0.25);
 }
 
-label{
-    margin-top:20px;
+label {
+    margin-top: 20px;
 }
 
-.row .spec{
+.row .spec {
     margin-top: 10px;
     min-height: 30px;
     width: 100%;
     border-radius: 2px;
     background: var(--glowny-kolor-tla);
     border: 1px solid var(--glowny-kolor-tla);
-    color:#fff;
+    color: #fff;
 }

@@ -1,13 +1,16 @@
 import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app"
-import { getAuth, 
-  signInWithEmailAndPassword, 
+import {
+  getAuth,
+  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signOut, 
-  setPersistence, 
+  signOut,
+  setPersistence,
   browserLocalPersistence,
   onAuthStateChanged,
-  sendEmailVerification } from "firebase/auth";
+  sendEmailVerification,
+  sendPasswordResetEmail
+} from "firebase/auth";
 import { getFirestore, collection, getDocs, setDoc, doc, where, query } from "firebase/firestore"
 
 const firebaseConfig = {
@@ -29,27 +32,28 @@ const db = getFirestore();
 //Sesja-----------------------------------------------------------
 const index = document.querySelector('#Index');
 const register = document.querySelector('#register');
-if(index){
-  onAuthStateChanged(auth,(user)=>{
-    if(user){
+if (index) {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
       console.log(user)
       //użytkownik jest zalogowany
       //wrzuć go na mainpage
-      window.location.href='mainpage.html';
-    }else{
+      window.location.href = 'mainpage.html';
+    } else {
     }
   });
-}else if(register){
-  onAuthStateChanged(auth,(user)=>{
-  if(user){
-}else{}
-});}
-else{
-  onAuthStateChanged(auth,(user)=>{
-    if(user){
-    }else{
+} else if (register) {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+    } else { }
+  });
+}
+else {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+    } else {
       //nie jest zalogowany to go wywal na index
-      window.location.href='index.html';
+      window.location.href = 'index.html';
     }
   });
 }
@@ -64,112 +68,132 @@ const registerPswRepeat = document.querySelector('#registerPsw-repeat');
 const registerLocalization = document.querySelector('#registerLocalization');
 const registerSpecialization = document.querySelector('#registerSpec');
 const registerPWZ = document.querySelector('#registerPwz');
-  if(registerButton){
-    registerButton.addEventListener('click',()=>{
-      if(registerPsw.value === registerPswRepeat.value){
-        createUserWithEmailAndPassword(auth, registerEmail.value,registerPsw.value)
-        .then((userCredential)=>{
+if (registerButton) {
+  registerButton.addEventListener('click', () => {
+    if (registerPsw.value === registerPswRepeat.value) {
+      createUserWithEmailAndPassword(auth, registerEmail.value, registerPsw.value)
+        .then((userCredential) => {
           addDoctorDetails(userCredential.user.uid)
           sendEmailVerification(userCredential.user)
-          .then(()=>{})
+            .then(() => { })
         })
-        .catch((error)=>{
+        .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorMessage)
         })
-      }else{
-        //błąd hasła nie są takie same
-        console.log("hasła nie są takie same")
-      }
-    })
-  }
-  async function addDoctorDetails(id){
-    const newDoc = {
-      uid: id,
-      name: registerName.value,
-      surname: registerSurname.value,
-      nrRating: "0",
-      rating: "0", 
-      specialization: registerSpecialization.value,
-      localization: registerLocalization.value,
-      PWZ: registerPWZ.value
-    };
-    console.log(newDoc)
-    await setDoc(doc(db,"doctors", id),newDoc);
-    window.location.href='mainpage.html';
-  }
+    } else {
+      //błąd hasła nie są takie same
+      console.log("hasła nie są takie same")
+    }
+  })
+}
+async function addDoctorDetails(id) {
+  const newDoc = {
+    uid: id,
+    name: registerName.value,
+    surname: registerSurname.value,
+    nrRating: "0",
+    rating: "0",
+    specialization: registerSpecialization.value,
+    localization: registerLocalization.value,
+    PWZ: registerPWZ.value
+  };
+  console.log(newDoc)
+  await setDoc(doc(db, "doctors", id), newDoc);
+  window.location.href = 'mainpage.html';
+}
 
 //Logowanie------------------------------------------------------------
 //pobieranie danych
 const loginButton = document.querySelector('#loginBtn');
 const loginEmail = document.querySelector('#emailLogin');
 const loginPassword = document.querySelector('#passwordLogin');
-if(loginButton){
-  loginButton.addEventListener('click',()=>{
+if (loginButton) {
+  loginButton.addEventListener('click', () => {
     //ustaw sesję lokalną
     setPersistence(auth, browserLocalPersistence)
-    .then(()=>{
-      //zaloguj mailem i hasłem
-      signInWithEmailAndPassword(auth,loginEmail.value,loginPassword.value)
-      .then((userCredential)=>{
-        //tu trzeba sprawdzić czy istnieje taki lekarz i jak nie to wylogować gościa
-        //albo dać opcje założenia konta lekarza
+      .then(() => {
+        //zaloguj mailem i hasłem
+        signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
+          .then((userCredential) => {
+            //tu trzeba sprawdzić czy istnieje taki lekarz i jak nie to wylogować gościa
+            //albo dać opcje założenia konta lekarza
+          })
+          .catch((error) => {
+            //tu są błędy jak coś nie działa np. złe hasło czy coś
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage)
+          })
       })
-      .catch((error)=>{
-        //tu są błędy jak coś nie działa np. złe hasło czy coś
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage)
-      })
-    })
   })
 }
 
+//Resetowania hasła----------------------------------------------------
+const pswResetEmail = document.querySelector('#pswResetEmail');
+const pswResetBtn = document.querySelector('#pswResetBtn');
+if (pswResetBtn) {
+  pswResetBtn.addEventListener('click', () => {
+    sendPasswordResetEmail(auth, pswResetEmail.value)
+      .then(() => {
+        //wysłano maila z resetem
+        window.location.href = 'login.html';
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage)
+      });
+  })
+}
+
+
 //wyloguj się----------------------------------------------------------
 const btnSignOut = document.querySelector('#SignOutBtn');
-if(btnSignOut){
-  btnSignOut.addEventListener('click',()=>{
-    setPersistence(auth,browserLocalPersistence)
-    .then(()=>{
-      signOut(auth).then(()=>{
-        window.location.href='index.html';
-      }).catch((error)=>{
-        //nie udało się wylogować czy coś
+if (btnSignOut) {
+  btnSignOut.addEventListener('click', () => {
+    setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        signOut(auth).then(() => {
+          window.location.href = 'index.html';
+        }).catch((error) => {
+          //nie udało się wylogować czy coś
+        })
       })
-    })
   })
 }
 
 
 //Wyświetalanie wizyt lekarza
 const docTable = document.querySelector('#add-doctor-table');
-function renderDocs(doc){
+function renderDocs(doc) {
   //sprawdzenie czy docTable w ogóle istnieje
   //bo jak nie jesteśmy zalogowani to nie istnieje i będzie walić błędy
-    if(docTable){
+  if (docTable) {
     let tr = document.createElement('tr');
     let data = document.createElement('td');
     let hour = document.createElement('td');
     data.textContent = doc.data().data;
     hour.textContent = doc.data().hour;
-    tr.setAttribute('data-id',doc.id);
+    tr.setAttribute('data-id', doc.id);
     tr.appendChild(data);
     tr.appendChild(hour);
     docTable.appendChild(tr);
   }
 }
 //Pobieranie z bazy wizyt lekarza i przekazywanie do funkcji wyżej
-onAuthStateChanged(auth,(user)=>{
-  if(user){
+onAuthStateChanged(auth, (user) => {
+  if (user) {
     //pobieranie id zalogowanego użytkownika
     const uid = user.uid;
     //pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika
-    const doctorCol = query(collection(db,"visits"), where("id_doc","==",uid));
-  getDocs(doctorCol)
-  .then((snapshot)=>{
-  snapshot.docs.forEach((doc)=>{
-      renderDocs(doc)
-  })
-})}
+    const doctorCol = query(collection(db, "visits"), where("id_doc", "==", uid));
+    getDocs(doctorCol)
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          renderDocs(doc)
+        })
+      })
+  }
 });

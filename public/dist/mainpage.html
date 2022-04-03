@@ -13,17 +13,60 @@
 
 <body>
     <div class="topnav">
-        <a class="active" target="iframe" href="pages/visits.html">Wizyty</a>
-        <a target="iframe" href="#news">Cos</a>
-        <a target="iframe" href="#contact">Cos</a>
-        <a target="iframe" href="#about">cos</a>
-        <button style="float: left;" id="SignOutBtn">Wyloguj się</button>
+        <a class="active" href="mainpage.html">Wizyty</a>
+        <a href="#">Cos</a>
+        <a href="#">Cos</a>
+        <a href="#">cos</a>
+        <div class="profileMenu">
+            <img id="profilePic" src="">
+            <p id="welcomeName">Witaj</p>
+            <a class="but" href="pages/profile.html">Profil</a>
+            <a class="but" href="#">Elo</a>
+            <a class="but" href="#">Elo</a>
+            <button style="float: left;" id="SignOutBtn">Wyloguj się</button>
+        </div>
     </div>
 
     <div class="main">
-        <iframe class="iframe" src="pages/visits.html" name="iframe" frameborder="0"></iframe>
-    </div>
+        <table id="add-doctor-visit-table">
+            <tbody>
+                <tr>
+                    <td>Data</td>
+                    <td>Godzina</td>
+                    <td>Szczegóły</td>
+                    <td>Potwierdź</td>
+                    <td>Usuń</td>
+                </tr>
+            </tbody>
+        </table>
+        <style>
+            * {
+                color: white;
+                font-size: 1rem;
+            }
 
+            table,
+            td {
+                border: 1px solid white;
+                padding: 1em;
+            }
+
+            button {
+                color: black;
+                padding: 0.5em;
+            }
+
+            .deleteButton {
+                color: black;
+                background-color: red;
+                padding: 0.5em;
+            }
+        </style>
+    </div>
+    <div class="footer">
+        Stopka
+        <p>Jakieś duperele</p>
+    </div>
 
     <script src="bundle.js"></script>
 </body>

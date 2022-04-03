@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app"
 import {
   getAuth,
@@ -9,9 +8,11 @@ import {
   browserLocalPersistence,
   onAuthStateChanged,
   sendEmailVerification,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  reload
 } from "firebase/auth";
-import { getFirestore, collection, getDocs, setDoc, doc, where, query } from "firebase/firestore"
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getFirestore, collection, getDocs, setDoc, doc, where, query, deleteDoc, updateDoc, waitForPendingWrites } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyALxo_cxtuu6aIhrMCxmyG6ZvzcpypQSaA",
@@ -27,6 +28,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
+const storage = getStorage();
 
 //Sesja-----------------------------------------------------------
 const index = document.querySelector('#Index');
@@ -96,7 +98,8 @@ async function addDoctorDetails(id) {
     rating: "0",
     specialization: registerSpecialization.value,
     localization: registerLocalization.value,
-    PWZ: registerPWZ.value
+    PWZ: registerPWZ.value,
+    img: ""
   };
   console.log(newDoc)
   await setDoc(doc(db, "doctors", id), newDoc);
@@ -167,12 +170,106 @@ if (btnSignOut) {
   })
 }
 
-//Wyświetalanie wizyt lekarza
-const docTable = document.querySelector('#add-doctor-table');
+//Wyświetalanie wizyt lekarza-----------------------------------------
+const docVisitTable = document.querySelector('#add-doctor-visit-table');
 function renderDocs(doc) {
   //sprawdzenie czy docTable w ogóle istnieje
   //bo jak nie jesteśmy zalogowani to nie istnieje i będzie walić błędy
-  if (docTable) {
+  if (docVisitTable) {
+    let tr = document.createElement('tr');
+    let data = document.createElement('td');
+    let hour = document.createElement('td');
+    let tdDetails = document.createElement('td');
+    let tdDone = document.createElement('td');
+    let tdDelete = document.createElement('td');
+    let detailsButton = document.createElement('button');
+    let doneButton = document.createElement('button');
+    let deleteButton = document.createElement('button');
+    detailsButton.textContent = "Szczegóły";
+    detailsButton.className = "detailsButton";
+    detailsButton.addEventListener('click', () => {
+      window.top.location = 'pages/visitDetails.html';
+      detailsVisit(doc);
+    })
+    doneButton.textContent = "Potwierdź";
+    doneButton.className = "doneButton";
+    doneButton.addEventListener('click', () => {
+      doneVisit(doc.id);
+    });
+    deleteButton.textContent = "Usuń";
+    deleteButton.className = "deleteButton";
+    deleteButton.addEventListener('click', () => {
+      deleteVisit(doc.id);
+    });
+    data.textContent = doc.data().data;
+    hour.textContent = doc.data().hour;
+    tr.setAttribute('data-id', doc.id);
+    tr.appendChild(data);
+    tr.appendChild(hour);
+    tdDetails.appendChild(detailsButton);
+    tdDone.appendChild(doneButton);
+    tdDelete.appendChild(deleteButton);
+    tr.appendChild(tdDetails);
+    tr.appendChild(tdDone);
+    tr.appendChild(tdDelete);
+    docVisitTable.appendChild(tr);
+  }
+}
+
+//Funkcja, która po zalogoawniu sprawdza użytkownika i odczytuje dane z bazy
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    //pobieranie id zalogowanego użytkownika
+    const uid = user.uid;
+
+    //Ustawianie zdjęcia i tekstu
+    const profilePic = document.getElementById('profilePic');
+    const profileWelcome = document.getElementById('welcomeName');
+    if (profilePic) {
+      getDocs(query(collection(db, "doctors"), where("uid", "==", uid)))
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            profilePic.src = doc.data().img
+            profileWelcome.textContent = "Witaj " + doc.data().name
+            const profileImg = doc.data().img
+          })
+        })
+    }
+
+
+    //Pobieranie z bazy nieodbytych wizyt lekarza i przekazywanie do funkcji wyżej
+    //pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika
+      const doctorCol = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", false));
+      getDocs(doctorCol)
+        .then((snapshot) => {
+          //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
+          snapshot.docs.forEach((doc) => {
+            renderDocs(doc)
+          })
+        })//koniec pobierania wizyt
+  }
+});
+
+//Usuwanie wizyty--------------------------------------------------
+function deleteVisit(id) {
+  deleteDoc(doc(db, "visits", id));
+  readVisits();
+  //trzeba jakoś odświerzyć iframa
+}
+
+//Potwierdzanie wizyty---------------------------------------------
+function doneVisit(id) {
+  updateDoc(doc(db, "visits", id), { done: true });
+  //tu też odświerzyc
+}
+
+//Szczegóły wiztyty o ile są potrzebne w ogóle???????????????????????
+//Tu jest problem z tym chyba że nie bedziemy odświerzać strony tylko zmienimy diva 
+function detailsVisit(doc) {
+  console.log("elo");
+  const docVisitDetailsTable = document.querySelector('#doctor-visit-details-table');
+  if (docVisitDetailsTable) {
+    console.log("działa");
     let tr = document.createElement('tr');
     let data = document.createElement('td');
     let hour = document.createElement('td');
@@ -181,29 +278,34 @@ function renderDocs(doc) {
     tr.setAttribute('data-id', doc.id);
     tr.appendChild(data);
     tr.appendChild(hour);
-    docTable.appendChild(tr);
+    docVisitDetailsTable.appendChild(tr);
   }
 }
-//Pobieranie z bazy wizyt lekarza i przekazywanie do funkcji wyżej
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    //pobieranie id zalogowanego użytkownika
-    const uid = user.uid;
-    //pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika
-    const doctorCol = query(collection(db, "visits"), where("id_doc", "==", uid));
-    getDocs(doctorCol)
-      .then((snapshot) => {
-        //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
-        snapshot.docs.forEach((doc) => {
-          renderDocs(doc)
-        })
-      })
-  }
-});
+
+//Dodawanie zdjęcia-------------------------------------------------
+const profileImgUpload = document.getElementById('profileImgUpload');
+const profileImgUploadButton = document.getElementById('profileImgUploadButton');
+profileImgUploadButton.addEventListener('click',()=>{
+  const profileImgRef = ref(storage,'doctors/'+profileImgUpload.files[0].name)
+  uploadBytes(profileImgRef, profileImgUpload.files[0]).then((snapshot)=>{
+    getDownloadURL(snapshot.ref)
+    .then((snapshot)=>{
+      setProfileImg(snapshot);
+    })
+  })
+})
+
+function setProfileImg(imgUrl){
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      updateDoc(doc(db, "doctors", user.uid), { img: imgUrl });
+      setTimeout(()=>{window.location.reload(true)},500)
+    }
+  });
+}
+
 
 //Trzeba zrobić funkcję wyświetlającą błedy która tworzy jakiegoś diva albo dodaje do istniejącegoi przesyła mu error message
 //ewentualnie zmiana opcji display z none na block i się wtedy pojawi div
 
-//co do wyświetlania innych rzeczy to na górze miacie wyświetlanie w tabelce wizyt danego lekarza 
-//możecie tam stworzyć przycisk i za jego pomocą wywołać coś na danym elemencie np szczegóły otwieracie nowego html 
-//i przesyłacie do podobnej funkcji tworzącej elementy danego 'doc' w sensie dokument 
+//co do wyświetlania innych rzeczy to na górze miacie wyświetlanie w tabelce wizyt danego lekarza

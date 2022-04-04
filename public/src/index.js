@@ -251,7 +251,6 @@ onAuthStateChanged(auth, (user) => {
 //Usuwanie wizyty--------------------------------------------------
 function deleteVisit(id) {
   deleteDoc(doc(db, "visits", id));
-  readVisits();
   setTimeout(()=>{window.location.reload(true)},500)
 }
 

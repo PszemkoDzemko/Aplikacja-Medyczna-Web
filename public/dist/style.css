@@ -195,11 +195,6 @@ label {
     color: white;
 }
 
-.main {
-    width: 100%;
-    overflow: auto;
-}
-
 .footer {
     width: 100vw;
     height: 20vh;
@@ -208,7 +203,7 @@ label {
 }
 
 .profileMenu {
-    left: 88vw;
+    left: 87vw;
     position: absolute;
     height: 3.1rem;
     width: 10vw;
@@ -220,8 +215,6 @@ label {
     display: none;
     float: left;
     background-color: rgba(19, 136, 113, 0.5);
-    ;
-    opacity: 0.8;
 }
 
 .profileMenu:hover {

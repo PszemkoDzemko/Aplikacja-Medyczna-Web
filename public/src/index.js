@@ -283,15 +283,17 @@ function detailsVisit(doc) {
 //Dodawanie zdjęcia-------------------------------------------------
 const profileImgUpload = document.getElementById('profileImgUpload');
 const profileImgUploadButton = document.getElementById('profileImgUploadButton');
-profileImgUploadButton.addEventListener('click',()=>{
-  const profileImgRef = ref(storage,'doctors/'+profileImgUpload.files[0].name)
-  uploadBytes(profileImgRef, profileImgUpload.files[0]).then((snapshot)=>{
-    getDownloadURL(snapshot.ref)
-    .then((snapshot)=>{
-      setProfileImg(snapshot);
+if(profileImgUploadButton) {
+  profileImgUploadButton.addEventListener('click',()=>{
+    const profileImgRef = ref(storage,'doctors/'+profileImgUpload.files[0].name)
+    uploadBytes(profileImgRef, profileImgUpload.files[0]).then((snapshot)=>{
+      getDownloadURL(snapshot.ref)
+      .then((snapshot)=>{
+        setProfileImg(snapshot);
+      })
     })
   })
-})
+}
 //Ustawianie dodanego zdjęcia na profilowe
 function setProfileImg(imgUrl){
   onAuthStateChanged(auth, (user) => {

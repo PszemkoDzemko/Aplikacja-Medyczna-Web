@@ -230,7 +230,7 @@ onAuthStateChanged(auth, (user) => {
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             profilePic.src = doc.data().img
-            profileWelcome.textContent = "Witaj " + doc.data().name
+            profileWelcome.textContent = " Witaj " + doc.data().name;
             const profileImg = doc.data().img
           })
         })
@@ -254,13 +254,13 @@ onAuthStateChanged(auth, (user) => {
 function deleteVisit(id) {
   deleteDoc(doc(db, "visits", id));
   readVisits();
-  //trzeba jakoś odświerzyć iframa
+  setTimeout(()=>{window.location.reload(true)},500)
 }
 
 //Potwierdzanie wizyty---------------------------------------------
 function doneVisit(id) {
   updateDoc(doc(db, "visits", id), { done: true });
-  //tu też odświerzyc
+  setTimeout(()=>{window.location.reload(true)},500)
 }
 
 //Szczegóły wiztyty o ile są potrzebne w ogóle???????????????????????
@@ -294,7 +294,7 @@ profileImgUploadButton.addEventListener('click',()=>{
     })
   })
 })
-
+//Ustawianie dodanego zdjęcia na profilowe
 function setProfileImg(imgUrl){
   onAuthStateChanged(auth, (user) => {
     if (user) {

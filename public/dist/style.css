@@ -254,5 +254,6 @@ label {
 #welcomeName {
     color: var(--glowny-kolor-tla);
     margin-top: 0.8em;
+    margin-left: 3em;
     font-size: 1.2rem;
 }

@@ -54,7 +54,7 @@ else {
     if (user) {
     } else {
       //nie jest zalogowany to go wywal na index
-      window.location.href = 'index.html';
+      window.location.href = './index.html';
     }
   });
 }
@@ -160,7 +160,7 @@ if (btnSignOut) {
     setPersistence(auth, browserLocalPersistence)
       .then(() => {
         signOut(auth).then(() => {
-          window.location.href = 'index.html';
+          window.location.href = './index.html';
         }).catch((error) => {
           //nie udało się wylogować czy coś
           const errorCode = error.code;
@@ -188,7 +188,6 @@ function renderDocs(doc) {
     detailsButton.textContent = "Szczegóły";
     detailsButton.className = "detailsButton";
     detailsButton.addEventListener('click', () => {
-      window.top.location = 'pages/visitDetails.html';
       detailsVisit(doc);
     })
     doneButton.textContent = "Potwierdź";
@@ -235,7 +234,6 @@ onAuthStateChanged(auth, (user) => {
           })
         })
     }
-
 
     //Pobieranie z bazy nieodbytych wizyt lekarza i przekazywanie do funkcji wyżej
     //pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika

@@ -12,7 +12,7 @@ import {
   reload
 } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getFirestore, collection, getDocs, setDoc, doc, where, query, deleteDoc, updateDoc, waitForPendingWrites } from "firebase/firestore"
+import { getFirestore, collection, getDocs, getDoc, setDoc, doc, where, query, deleteDoc, updateDoc, waitForPendingWrites } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyALxo_cxtuu6aIhrMCxmyG6ZvzcpypQSaA",
@@ -36,7 +36,6 @@ const register = document.querySelector('#register');
 if (index) {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log(user)
       //użytkownik jest zalogowany
       //wrzuć go na mainpage
       window.location.href = 'mainpage.html';
@@ -45,8 +44,7 @@ if (index) {
   });
 } else if (register) {
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-    } else { }
+    if (user) {} else {}
   });
 }
 else {
@@ -188,7 +186,8 @@ function renderDocs(doc) {
     detailsButton.textContent = "Szczegóły";
     detailsButton.className = "detailsButton";
     detailsButton.addEventListener('click', () => {
-      detailsVisit(doc);
+      sessionStorage.setItem("doc",JSON.stringify(doc.data()));
+      window.location.href = 'visitDetails.html';
     })
     doneButton.textContent = "Potwierdź";
     doneButton.className = "doneButton";
@@ -262,22 +261,44 @@ function doneVisit(id) {
 
 //Szczegóły wiztyty o ile są potrzebne w ogóle???????????????????????
 //Tu jest problem z tym chyba że nie bedziemy odświerzać strony tylko zmienimy diva 
+const visitDetailsBody = document.getElementById('visitDetailsBody');
+if(visitDetailsBody){
+  const doctor = sessionStorage.getItem('doc');
+  detailsVisit(JSON.parse(doctor))
+}
 function detailsVisit(doc) {
-  console.log("elo");
-  const docVisitDetailsTable = document.querySelector('#doctor-visit-details-table');
+  const docVisitDetailsTable = document.querySelector('#visit-details-table');
   if (docVisitDetailsTable) {
-    console.log("działa");
     let tr = document.createElement('tr');
     let data = document.createElement('td');
     let hour = document.createElement('td');
-    data.textContent = doc.data().data;
-    hour.textContent = doc.data().hour;
+    let patname = document.createElement('td');
+    let patsurname = document.createElement('td');
+    data.textContent = doc.data;
+    hour.textContent = doc.hour;
+    getPatientData(doc.id_pac).then((res)=>{
+      patname.textContent = res.name;
+      patsurname.textContent = res.surname;
+    })
     tr.setAttribute('data-id', doc.id);
     tr.appendChild(data);
     tr.appendChild(hour);
+    tr.appendChild(patname);
+    tr.appendChild(patsurname);
     docVisitDetailsTable.appendChild(tr);
   }
 }
+
+//Pobieranie danych pacjenta
+function getPatientData(id){
+  let pat = 
+  getDoc(doc(db,"users",id))
+  .then((snapshot)=>{
+   return snapshot.data();
+  })
+  return pat;
+}
+
 
 //Dodawanie zdjęcia-------------------------------------------------
 const profileImgUpload = document.getElementById('profileImgUpload');

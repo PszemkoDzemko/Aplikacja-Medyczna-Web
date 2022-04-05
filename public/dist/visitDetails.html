@@ -9,10 +9,9 @@
     <title>Medopek</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 </head>
 
-<body>
+<body id="visitDetailsBody">
     <div class="topnav">
         <a class="active" href="mainpage.html">Wizyty</a>
         <a href="#">Cos</a>
@@ -27,42 +26,34 @@
             <button style="float: left;" id="SignOutBtn">Wyloguj się</button>
         </div>
     </div>
-
     <div class="main">
-        <table id="add-doctor">
-            <thead>
-                <tr>
-                    <td>Data</td>
-                    <td>Godzina</td>
-                    <td>Szczegóły</td>
-                    <td>Potwierdź</td>
-                    <td>Usuń</td>
-                </tr>
-            </thead>
-            <tbody id="add-doctor-visit-table">
-                
-            </tbody>
-        </table>
-        <style>
+    <table id="visit-details-table">
+        <tbody>
+            <tr>
+                <td>Data</td>
+                <td>Godzina</td>
+                <td>Imie Pacjenta</td>
+                <td>Nazwisko Pacjenta</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="footer">
+        Stopka
+        <p>Jakieś duperele</p>
+    </div>
+    <style>
             * {
+                color: white;
                 font-size: 1rem;
             }
-            table{
-                padding-top: 1rem;
-            }
+
             #add-doctor-visit-table,td
             {
                 border: 1px solid white;
                 text-align: center;
-                
             }
-            thead{
-                color: aqua;
-            }
-            tbody{
-                color: black;
-                background-color: transparent;
-            }
+
             button {
                 color: black;
                 padding: 0.5em;
@@ -74,19 +65,7 @@
                 padding: 0.5em;
             }
         </style>
-    </div>
-    <div class="footer">
-        Stopka
-        <p>Jakieś duperele</p>
-    </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-    <script>
-        $(document).ready( function () {
-           setTimeout(()=> $('#add-doctor').DataTable(), 500) 
-        } );
-    </script>
+        
     <script src="bundle.js"></script>
 </body>
 

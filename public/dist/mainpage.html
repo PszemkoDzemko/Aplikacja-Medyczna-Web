@@ -32,8 +32,8 @@
         <table id="add-doctor" class="table">
             <thead>
                 <tr>
-                    <th class="mark">Data</th>
-                    <th class="mark">Godzina</th>
+                    <th class="mark">Data i godzina</th>
+                    <th class="mark">Imię i Nazwisko Pacjenta</th>
                     <th>Szczegóły</th>
                     <th>Potwierdź</th>
                     <th>Usuń</th>
@@ -53,7 +53,10 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready( function () {
-           setTimeout(()=> $('#add-doctor').DataTable(), 500) 
+           setTimeout(()=> $('#add-doctor').DataTable({"language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Polish.json"
+         }}), 700) 
+           
         } );
     </script>
     <script src="bundle.js"></script>

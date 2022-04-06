@@ -176,7 +176,7 @@ function renderVisits(doc) {
   if (docVisitTable) {
     let tr = document.createElement('tr');
     let data = document.createElement('td');
-    let hour = document.createElement('td');
+    let patient = document.createElement('td');
     let tdDetails = document.createElement('td');
     let tdDone = document.createElement('td');
     let tdDelete = document.createElement('td');
@@ -199,11 +199,13 @@ function renderVisits(doc) {
     deleteButton.addEventListener('click', () => {
       deleteVisit(doc.id);
     });
-    data.textContent = doc.data().data;
-    hour.textContent = doc.data().hour;
+    getPatientData(doc.data().id_pac).then((res) => {
+      patient.textContent = res.name+" "+res.surname
+    })
+    data.textContent = doc.data().data + " " + doc.data().hour;
     tr.setAttribute('data-id', doc.id);
     tr.appendChild(data);
-    tr.appendChild(hour);
+    tr.appendChild(patient);
     tdDetails.appendChild(detailsButton);
     tdDone.appendChild(doneButton);
     tdDelete.appendChild(deleteButton);
@@ -220,7 +222,7 @@ function renderDoneVisits(doc) {
   if (docVisitDoneTable) {
     let tr = document.createElement('tr');
     let data = document.createElement('td');
-    let hour = document.createElement('td');
+    let patient = document.createElement('td');
     let tdDelete = document.createElement('td');
     let deleteButton = document.createElement('button');
     deleteButton.textContent = "Usuń";
@@ -228,11 +230,13 @@ function renderDoneVisits(doc) {
     deleteButton.addEventListener('click', () => {
       deleteVisit(doc.id);
     });
-    data.textContent = doc.data().data;
-    hour.textContent = doc.data().hour;
+    getPatientData(doc.data().id_pac).then((res) => {
+      patient.textContent = res.name+" "+res.surname
+    })
+    data.textContent = doc.data().data+" "+doc.data().hour;
     tr.setAttribute('data-id', doc.id);
     tr.appendChild(data);
-    tr.appendChild(hour);
+    tr.appendChild(patient);
     tdDelete.appendChild(deleteButton);
     tr.appendChild(tdDelete);
     docVisitDoneTable.appendChild(tr);
@@ -309,18 +313,15 @@ function detailsVisit(doc) {
   if (docVisitDetailsTable) {
     let tr = document.createElement('tr');
     let data = document.createElement('td');
-    let hour = document.createElement('td');
     let patname = document.createElement('td');
     let patsurname = document.createElement('td');
-    data.textContent = doc.data;
-    hour.textContent = doc.hour;
+    data.textContent = doc.data+' '+doc.hour;
     getPatientData(doc.id_pac).then((res) => {
       patname.textContent = res.name;
       patsurname.textContent = res.surname;
     })
     tr.setAttribute('data-id', doc.id);
     tr.appendChild(data);
-    tr.appendChild(hour);
     tr.appendChild(patname);
     tr.appendChild(patsurname);
     docVisitDetailsTable.appendChild(tr);

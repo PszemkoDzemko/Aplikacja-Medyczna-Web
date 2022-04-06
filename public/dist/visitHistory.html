@@ -27,13 +27,12 @@
         </div>
     </div>
     <div class="main">
-    <table>
+    <table id="add-doctor" class="table">
         <thead>
             <tr>
-                <th>Data</th>
-                <th>Godzina</th>
+                <th>Data i godzina</th>
                 <th>Imie Pacjenta</th>
-                <th>Nazwisko Pacjenta</th>
+                <th>Usuń</th>
             </tr>
         </thead>
         <tbody id="visit-history-table">
@@ -47,7 +46,6 @@
     </div>
     <style>
             * {
-                color: white;
                 font-size: 1rem;
             }
 
@@ -68,7 +66,16 @@
                 padding: 0.5em;
             }
         </style>
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+        <script>
+            $(document).ready( function () {
+               setTimeout(()=> $('#add-doctor').DataTable({"language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Polish.json"
+             }}), 700) 
+               
+            } );
+        </script>
     <script src="bundle.js"></script>
 </body>
 

@@ -44,7 +44,7 @@ if (index) {
   });
 } else if (register) {
   onAuthStateChanged(auth, (user) => {
-    if (user) {} else {}
+    if (user) { } else { }
   });
 }
 else {
@@ -170,7 +170,7 @@ if (btnSignOut) {
 
 //Wyświetalanie wizyt lekarza-----------------------------------------
 const docVisitTable = document.querySelector('#add-doctor-visit-table');
-function renderDocs(doc) {
+function renderVisits(doc) {
   //sprawdzenie czy docTable w ogóle istnieje
   //bo jak nie jesteśmy zalogowani to nie istnieje i będzie walić błędy
   if (docVisitTable) {
@@ -186,7 +186,7 @@ function renderDocs(doc) {
     detailsButton.textContent = "Szczegóły";
     detailsButton.className = "detailsButton";
     detailsButton.addEventListener('click', () => {
-      sessionStorage.setItem("doc",JSON.stringify(doc.data()));
+      sessionStorage.setItem("doc", JSON.stringify(doc.data()));
       window.location.href = 'visitDetails.html';
     })
     doneButton.textContent = "Potwierdź";
@@ -214,6 +214,32 @@ function renderDocs(doc) {
   }
 }
 
+//Historia wizyt
+const docVisitDoneTable = document.querySelector('#visit-history-table');
+function renderDoneVisits(doc) {
+  if (docVisitDoneTable) {
+    let tr = document.createElement('tr');
+    let data = document.createElement('td');
+    let hour = document.createElement('td');
+    let tdDelete = document.createElement('td');
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = "Usuń";
+    deleteButton.className = "deleteButton";
+    deleteButton.addEventListener('click', () => {
+      deleteVisit(doc.id);
+    });
+    data.textContent = doc.data().data;
+    hour.textContent = doc.data().hour;
+    tr.setAttribute('data-id', doc.id);
+    tr.appendChild(data);
+    tr.appendChild(hour);
+    tdDelete.appendChild(deleteButton);
+    tr.appendChild(tdDelete);
+    docVisitDoneTable.appendChild(tr);
+  }
+
+}
+
 //Funkcja, która po zalogoawniu sprawdza użytkownika i odczytuje dane z bazy
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -236,33 +262,45 @@ onAuthStateChanged(auth, (user) => {
 
     //Pobieranie z bazy nieodbytych wizyt lekarza i przekazywanie do funkcji wyżej
     //pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika
-      const doctorCol = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", false));
-      getDocs(doctorCol)
-        .then((snapshot) => {
-          //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
-          snapshot.docs.forEach((doc) => {
-            renderDocs(doc)
-          })
-        })//koniec pobierania wizyt
+    const doctorVisitNotDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", false));
+    getDocs(doctorVisitNotDone)
+      .then((snapshot) => {
+        //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
+        snapshot.docs.forEach((doc) => {
+          renderVisits(doc)
+        })
+      })//koniec pobierania wizyt
+
+
+    //pobieranie zakończonych wizyt
+    const doctorVisitDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", true));
+    getDocs(doctorVisitDone)
+      .then((snapshot) => {
+        //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
+        snapshot.docs.forEach((doc) => {
+          renderDoneVisits(doc)
+        })
+      })
   }
+
 });
 
 //Usuwanie wizyty--------------------------------------------------
 function deleteVisit(id) {
   deleteDoc(doc(db, "visits", id));
-  setTimeout(()=>{window.location.reload(true)},500)
+  setTimeout(() => { window.location.reload(true) }, 500)
 }
 
 //Potwierdzanie wizyty---------------------------------------------
 function doneVisit(id) {
   updateDoc(doc(db, "visits", id), { done: true });
-  setTimeout(()=>{window.location.reload(true)},500)
+  setTimeout(() => { window.location.reload(true) }, 500)
 }
 
 //Szczegóły wiztyty o ile są potrzebne w ogóle???????????????????????
 //Tu jest problem z tym chyba że nie bedziemy odświerzać strony tylko zmienimy diva 
 const visitDetailsBody = document.getElementById('visitDetailsBody');
-if(visitDetailsBody){
+if (visitDetailsBody) {
   const doctor = sessionStorage.getItem('doc');
   detailsVisit(JSON.parse(doctor))
 }
@@ -276,7 +314,7 @@ function detailsVisit(doc) {
     let patsurname = document.createElement('td');
     data.textContent = doc.data;
     hour.textContent = doc.hour;
-    getPatientData(doc.id_pac).then((res)=>{
+    getPatientData(doc.id_pac).then((res) => {
       patname.textContent = res.name;
       patsurname.textContent = res.surname;
     })
@@ -290,12 +328,12 @@ function detailsVisit(doc) {
 }
 
 //Pobieranie danych pacjenta
-function getPatientData(id){
-  let pat = 
-  getDoc(doc(db,"users",id))
-  .then((snapshot)=>{
-   return snapshot.data();
-  })
+function getPatientData(id) {
+  let pat =
+    getDoc(doc(db, "users", id))
+      .then((snapshot) => {
+        return snapshot.data();
+      })
   return pat;
 }
 
@@ -303,23 +341,23 @@ function getPatientData(id){
 //Dodawanie zdjęcia-------------------------------------------------
 const profileImgUpload = document.getElementById('profileImgUpload');
 const profileImgUploadButton = document.getElementById('profileImgUploadButton');
-if(profileImgUploadButton) {
-  profileImgUploadButton.addEventListener('click',()=>{
-    const profileImgRef = ref(storage,'doctors/'+profileImgUpload.files[0].name)
-    uploadBytes(profileImgRef, profileImgUpload.files[0]).then((snapshot)=>{
+if (profileImgUploadButton) {
+  profileImgUploadButton.addEventListener('click', () => {
+    const profileImgRef = ref(storage, 'doctors/' + profileImgUpload.files[0].name)
+    uploadBytes(profileImgRef, profileImgUpload.files[0]).then((snapshot) => {
       getDownloadURL(snapshot.ref)
-      .then((snapshot)=>{
-        setProfileImg(snapshot);
-      })
+        .then((snapshot) => {
+          setProfileImg(snapshot);
+        })
     })
   })
 }
 //Ustawianie dodanego zdjęcia na profilowe
-function setProfileImg(imgUrl){
+function setProfileImg(imgUrl) {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       updateDoc(doc(db, "doctors", user.uid), { img: imgUrl });
-      setTimeout(()=>{window.location.reload(true)},500)
+      setTimeout(() => { window.location.reload(true) }, 500)
     }
   });
 }

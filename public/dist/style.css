@@ -17,6 +17,7 @@
 }
 
 body {
+    width: 100vw;
     /* background-color: #75CFA9; */
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
 }
@@ -171,6 +172,7 @@ label {
     color: #fff;
 }
 
+/* Nav Bar ---------------------------------------------------------*/
 .topnav {
     background-color: #ddd;
     overflow: hidden;
@@ -252,7 +254,7 @@ label {
 
 /* TABLE */
 .main{
-    max-width: 880px;
+    max-width: 55vw;
     padding: 0 0px;
     margin: 5rem auto;
     color:white;
@@ -261,7 +263,6 @@ label {
 .table{
     width: 100%;
     border-collapse: collapse;
-
 }
 
 .table td, .table th{

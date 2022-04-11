@@ -29,20 +29,27 @@
 
     <!-- Main -->
     <div class="main">
-        <p>Dodaj zdjęcie</p>
-        <input type="file" accept=".jpg,.png" id="profileImgUpload">
-        <input type="submit" id="profileImgUploadButton">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="mark">Data i godzina</th>
+                    <th class="mark">Imię i Nazwisko Pacjenta</th>
+                    <th>Szczegóły</th>
+                    <th>Potwierdź</th>
+                    <th>Usuń</th>
+                </tr>
+            </thead>
+            <tbody id="doctor-referral-table">
+                
+            </tbody>
+        </table>
 
     </div>
     <div class="footer">
         Stopka
         <p>Jakieś duperele</p>
     </div>
-    <style>
-        *{
-            color:white;
-        }
-    </style>
+
     <script src="bundle.js"></script>
 </body>
 

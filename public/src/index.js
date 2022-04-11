@@ -168,6 +168,60 @@ if (btnSignOut) {
   })
 }
 
+//Funkcja, która po zalogoawniu sprawdza użytkownika i odczytuje dane z bazy
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    //pobieranie id zalogowanego użytkownika
+    const uid = user.uid;
+
+    //Ustawianie zdjęcia i tekstu
+    const profilePic = document.getElementById('profilePic');
+    const profileWelcome = document.getElementById('welcomeName');
+    if (profilePic) {
+      getDocs(query(collection(db, "doctors"), where("uid", "==", uid)))
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            profilePic.src = doc.data().img
+            profileWelcome.textContent = " Witaj " + doc.data().name;
+            const profileImg = doc.data().img
+          })
+        })
+    }
+
+    //Pobieranie z bazy nieodbytych wizyt lekarza i przekazywanie do funkcji wyżej
+    //pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika
+    const doctorVisitNotDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", false));
+    getDocs(doctorVisitNotDone)
+      .then((snapshot) => {
+        //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
+        snapshot.docs.forEach((doc) => {
+          renderVisits(doc)
+        })
+      })//koniec pobierania wizyt
+
+
+    //pobieranie zakończonych wizyt
+    const doctorVisitDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", true));
+    getDocs(doctorVisitDone)
+      .then((snapshot) => {
+        //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
+        snapshot.docs.forEach((doc) => {
+          renderDoneVisits(doc)
+        })
+      })
+
+    //Pobieranie skierowań lekarza
+    const doctorReferralDone = query(collection(db, "referral"), where("id_doc", "==", uid));
+    getDocs(doctorReferralDone)
+    .then((snapshot)=>{
+      snapshot.docs.forEach((doc)=>{
+        renderReferral(doc);
+      })
+    })
+  }
+
+});
+
 //Wyświetalanie wizyt lekarza-----------------------------------------
 const docVisitTable = document.querySelector('#add-doctor-visit-table');
 function renderVisits(doc) {
@@ -244,51 +298,6 @@ function renderDoneVisits(doc) {
 
 }
 
-//Funkcja, która po zalogoawniu sprawdza użytkownika i odczytuje dane z bazy
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    //pobieranie id zalogowanego użytkownika
-    const uid = user.uid;
-
-    //Ustawianie zdjęcia i tekstu
-    const profilePic = document.getElementById('profilePic');
-    const profileWelcome = document.getElementById('welcomeName');
-    if (profilePic) {
-      getDocs(query(collection(db, "doctors"), where("uid", "==", uid)))
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            profilePic.src = doc.data().img
-            profileWelcome.textContent = " Witaj " + doc.data().name;
-            const profileImg = doc.data().img
-          })
-        })
-    }
-
-    //Pobieranie z bazy nieodbytych wizyt lekarza i przekazywanie do funkcji wyżej
-    //pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika
-    const doctorVisitNotDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", false));
-    getDocs(doctorVisitNotDone)
-      .then((snapshot) => {
-        //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
-        snapshot.docs.forEach((doc) => {
-          renderVisits(doc)
-        })
-      })//koniec pobierania wizyt
-
-
-    //pobieranie zakończonych wizyt
-    const doctorVisitDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", true));
-    getDocs(doctorVisitDone)
-      .then((snapshot) => {
-        //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
-        snapshot.docs.forEach((doc) => {
-          renderDoneVisits(doc)
-        })
-      })
-  }
-
-});
-
 //Usuwanie wizyty--------------------------------------------------
 function deleteVisit(id) {
   deleteDoc(doc(db, "visits", id));
@@ -328,6 +337,27 @@ function detailsVisit(doc) {
   }
 }
 
+//Wyświetlanie skierowań
+const referralBody = document.getElementById('doctor-referral-table');
+function renderReferral(doc){
+  if(referralBody){
+    let tr = document.createElement('tr');
+    let data = document.createElement('td');
+    let patname = document.createElement('td');
+    let patsurname = document.createElement('td');
+    getPatientData(doc.data().id_pac).then((res) => {
+      patname.textContent = res.name;
+      patsurname.textContent = res.surname;
+    })
+    tr.appendChild(data);
+    tr.appendChild(patname);
+    tr.appendChild(patsurname);
+    referralBody.appendChild(tr);
+  }
+}
+
+
+
 //Pobieranie danych pacjenta
 function getPatientData(id) {
   let pat =
@@ -362,7 +392,6 @@ function setProfileImg(imgUrl) {
     }
   });
 }
-
 
 //Trzeba zrobić funkcję wyświetlającą błedy która tworzy jakiegoś diva albo dodaje do istniejącegoi przesyła mu error message
 //ewentualnie zmiana opcji display z none na block i się wtedy pojawi div

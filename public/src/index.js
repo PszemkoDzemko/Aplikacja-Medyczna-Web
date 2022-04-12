@@ -463,6 +463,8 @@ function showError(error) {
     errorP.textContent = "Nieprawidłowe hasło";
   }else if(error==="auth/missing-email"){
     errorP.textContent = "E-mail jest wymagany";
+  }else if(error==="auth/weak-password"){
+    errorP.textContent = "Hasło powinno mieć min 6 znaków";
   }
   
 }

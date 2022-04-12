@@ -526,3 +526,29 @@ input[type=search] {
     transform: scaleX(1);
     transform-origin: left;
 }
+
+#registerPwz:not(:placeholder-shown):invalid,
+#registerLocalization:not(:placeholder-shown):invalid,
+#registerSurname:not(:placeholder-shown):invalid,
+#registerName:not(:placeholder-shown):invalid,
+#registerPsw-repeat:not(:placeholder-shown):invalid,
+#registerPsw:not(:placeholder-shown):invalid,
+#registerEmail:not(:placeholder-shown):invalid
+{
+    border-color: red;
+    outline: none;
+    box-shadow: 0 0 0.2em red;
+}
+
+#registerPwz:not(:placeholder-shown):required:valid,
+#registerLocalization:not(:placeholder-shown):required:valid,
+#registerSurname:not(:placeholder-shown):required:valid,
+#registerName:not(:placeholder-shown):required:valid,
+#registerPsw-repeat:not(:placeholder-shown):required:valid,
+#registerPsw:not(:placeholder-shown):required:valid,
+#registerEmail:not(:placeholder-shown):required:valid
+{
+    border-color: #4dcc23;
+    outline: none;
+    box-shadow: 0 0 0.2em #4dcc23;
+}

@@ -21,37 +21,37 @@
         <div class="row">
           <!-- <label for="email"><b>E-mail</b></label> -->
           <i class="fa fa-user" aria-hidden="true"></i>
-          <input type="text" placeholder="Podaj adres e-mail" name="email" id="registerEmail">
+          <input type="text" placeholder="Podaj adres e-mail" name="email" id="registerEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
         </div>
         <div class="row">
           <!-- <label for="psw"><b>Hasło</b></label> -->
           <i class="fa fa-lock" aria-hidden="true"></i>
-          <input type="password" placeholder="Podaj Hasło" name="psw" id="registerPsw">
+          <input type="password" placeholder="Podaj Hasło" name="psw" id="registerPsw" required pattern=".{6,}">
         </div>
         <div class="row">
           <!-- <label for="psw-repeat"><b>Hasło jeszcze raz</b></label> -->
           <i class="fa fa-lock" aria-hidden="true"></i>
-          <input type="password" placeholder="Powtórz hasło" name="psw-repeat" id="registerPsw-repeat">
+          <input type="password" placeholder="Powtórz hasło" name="psw-repeat" id="registerPsw-repeat" required pattern=".{6,}">
         </div>
         <div class="row">
           <!-- <label for="psw-repeat"><b>Imie</b></label> -->
           <i class="fa fa-user-circle" aria-hidden="true"></i>
-          <input type="text" placeholder="Podaj imie" name="name" id="registerName">
+          <input type="text" placeholder="Podaj imie" name="name" id="registerName" required pattern=".{2,}">
         </div>
         <div class="row">
           <!-- <label for="psw-repeat"><b>Nazwisko</b></label> -->
           <i class="fa fa-user-circle" aria-hidden="true"></i>
-          <input type="text" placeholder="Podaj nazwisko" name="surname" id="registerSurname">
+          <input type="text" placeholder="Podaj nazwisko" name="surname" id="registerSurname" required pattern=".{2,}">
         </div>
         <div class="row">
           <!-- <label for="psw-repeat"><b>Adress</b></label> -->
           <i class="fa fa-home" aria-hidden="true"></i>
-          <input type="text" placeholder="Podaj adres" name="localization" id="registerLocalization">
+          <input type="text" placeholder="Podaj adres" name="localization" id="registerLocalization" required pattern=".{2,}">
         </div>
         <div class="row">
           <!-- <label for="psw-repeat"><b>Numer PWZ</b></label> -->
           <i class="fa fa-address-card" aria-hidden="true"></i>
-          <input type="text" placeholder="Podaj numer PWZ" name="pwz" id="registerPwz">
+          <input type="text" placeholder="Podaj numer PWZ" name="pwz" id="registerPwz" required pattern="[0-9]{4,}">
         </div>
         <div class="row">
           <label for="docSpec">Wybierz specjalizacje:</label>

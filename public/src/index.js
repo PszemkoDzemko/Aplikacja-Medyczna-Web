@@ -12,7 +12,20 @@ import {
   reload
 } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getFirestore, collection, getDocs, getDoc, setDoc, addDoc, doc, where, query, deleteDoc, updateDoc, waitForPendingWrites } from "firebase/firestore"
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  setDoc,
+  addDoc,
+  doc,
+  where,
+  query,
+  deleteDoc,
+  updateDoc,
+  waitForPendingWrites
+} from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyALxo_cxtuu6aIhrMCxmyG6ZvzcpypQSaA",
@@ -118,7 +131,8 @@ if (loginButton) {
             //tu są błędy jak coś nie działa np. złe hasło czy coś
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorMessage)
+            showError(errorCode);
+            console.log(errorMessage);
           })
       })
   })
@@ -138,6 +152,7 @@ if (pswResetBtn) {
         //błedy do przesłania i wyświetlania w jakimś div
         const errorCode = error.code;
         const errorMessage = error.message;
+        showError(errorCode);
         console.log(errorMessage)
       });
   })
@@ -325,7 +340,7 @@ function detailsVisit(doc) {
       patname.textContent = res.name;
       patsurname.textContent = res.surname;
     })
-    referralButton.addEventListener('click',()=>{
+    referralButton.addEventListener('click', () => {
       addReferral(doc)
     })
     tr.setAttribute('data-id', doc.id);
@@ -386,7 +401,7 @@ function getPatientData(id) {
   return pat;
 }
 
-function addReferral(doctor){
+function addReferral(doctor) {
   const modal = document.getElementById('modal');
   const closeModal = document.getElementById('closeModal');
   const sendDataButton = document.getElementById('referralAddButton');
@@ -394,10 +409,10 @@ function addReferral(doctor){
   const referralReason = document.getElementById('referralReason');
   const referralInfo = document.getElementById('referralInfo');
   modal.showModal();
-  closeModal.addEventListener('click',()=>{
+  closeModal.addEventListener('click', () => {
     modal.close();
   })
-  sendDataButton.addEventListener('click',()=>{
+  sendDataButton.addEventListener('click', () => {
     const newReferral = {
       data: referralData.value,
       id_doc: doctor.id_doc,
@@ -432,6 +447,24 @@ function setProfileImg(imgUrl) {
       setTimeout(() => { window.location.reload(true) }, 500)
     }
   });
+}
+
+
+function showError(error) {
+  const errorDiv = document.getElementById('errorDiv');
+  let errorP = document.getElementById('errorP')
+  if(error==="auth/invalid-email"){
+      errorP.textContent = "Nieprawidłowy adres email";
+  }else if(error==="auth/user-not-found"){
+    errorP.textContent = "Taki użytkownik nie istnieje";
+  }else if(error==="auth/internal-error"){
+    errorP.textContent = "Podaj hasło";
+  }else if(error==="auth/wrong-password"){
+    errorP.textContent = "Nieprawidłowe hasło";
+  }else if(error==="auth/missing-email"){
+    errorP.textContent = "E-mail jest wymagany";
+  }
+  
 }
 
 //Trzeba zrobić funkcję wyświetlającą błedy która tworzy jakiegoś diva albo dodaje do istniejącegoi przesyła mu error message

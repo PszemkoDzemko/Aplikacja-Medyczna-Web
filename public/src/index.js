@@ -12,7 +12,7 @@ import {
   reload
 } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getFirestore, collection, getDocs, getDoc, setDoc, doc, where, query, deleteDoc, updateDoc, waitForPendingWrites } from "firebase/firestore"
+import { getFirestore, collection, getDocs, getDoc, setDoc, addDoc, doc, where, query, deleteDoc, updateDoc, waitForPendingWrites } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyALxo_cxtuu6aIhrMCxmyG6ZvzcpypQSaA",
@@ -30,32 +30,24 @@ const auth = getAuth();
 const db = getFirestore();
 const storage = getStorage();
 
-//Sesja-----------------------------------------------------------
+//Sesja----------------------------------------------------------------
 const index = document.querySelector('#Index');
 const register = document.querySelector('#register');
-if (index) {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    if (index) {
       //użytkownik jest zalogowany
       //wrzuć go na mainpage
       window.location.href = 'mainpage.html';
-    } else {
+    } else if (register) {
     }
-  });
-} else if (register) {
-  onAuthStateChanged(auth, (user) => {
-    if (user) { } else { }
-  });
-}
-else {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-    } else {
-      //nie jest zalogowany to go wywal na index
+  } else {
+    //nie jest zalogowany to go wywal na index
+    if (!index && !register) {
       window.location.href = './index.html';
     }
-  });
-}
+  }
+});
 
 //Rejestracja----------------------------------------------------------
 const registerButton = document.querySelector('#registerBtn');
@@ -213,11 +205,11 @@ onAuthStateChanged(auth, (user) => {
     //Pobieranie skierowań lekarza
     const doctorReferralDone = query(collection(db, "referral"), where("id_doc", "==", uid));
     getDocs(doctorReferralDone)
-    .then((snapshot)=>{
-      snapshot.docs.forEach((doc)=>{
-        renderReferral(doc);
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          renderReferral(doc);
+        })
       })
-    })
   }
 
 });
@@ -254,7 +246,7 @@ function renderVisits(doc) {
       deleteVisit(doc.id);
     });
     getPatientData(doc.data().id_pac).then((res) => {
-      patient.textContent = res.name+" "+res.surname
+      patient.textContent = res.name + " " + res.surname
     })
     data.textContent = doc.data().data + " " + doc.data().hour;
     tr.setAttribute('data-id', doc.id);
@@ -285,9 +277,9 @@ function renderDoneVisits(doc) {
       deleteVisit(doc.id);
     });
     getPatientData(doc.data().id_pac).then((res) => {
-      patient.textContent = res.name+" "+res.surname
+      patient.textContent = res.name + " " + res.surname
     })
-    data.textContent = doc.data().data+" "+doc.data().hour;
+    data.textContent = doc.data().data + " " + doc.data().hour;
     tr.setAttribute('data-id', doc.id);
     tr.appendChild(data);
     tr.appendChild(patient);
@@ -316,6 +308,7 @@ const visitDetailsBody = document.getElementById('visitDetailsBody');
 if (visitDetailsBody) {
   const doctor = sessionStorage.getItem('doc');
   detailsVisit(JSON.parse(doctor))
+  sessionStorage.clear;
 }
 function detailsVisit(doc) {
   const docVisitDetailsTable = document.querySelector('#visit-details-table');
@@ -324,39 +317,64 @@ function detailsVisit(doc) {
     let data = document.createElement('td');
     let patname = document.createElement('td');
     let patsurname = document.createElement('td');
-    data.textContent = doc.data+' '+doc.hour;
+    let tdBtnReferral = document.createElement('td');
+    let referralButton = document.createElement('button');
+    referralButton.textContent = "Wystaw";
+    data.textContent = doc.data + ' ' + doc.hour;
     getPatientData(doc.id_pac).then((res) => {
       patname.textContent = res.name;
       patsurname.textContent = res.surname;
+    })
+    referralButton.addEventListener('click',()=>{
+      addReferral(doc)
     })
     tr.setAttribute('data-id', doc.id);
     tr.appendChild(data);
     tr.appendChild(patname);
     tr.appendChild(patsurname);
+    tdBtnReferral.appendChild(referralButton);
+    tr.appendChild(tdBtnReferral);
     docVisitDetailsTable.appendChild(tr);
   }
 }
 
 //Wyświetlanie skierowań
 const referralBody = document.getElementById('doctor-referral-table');
-function renderReferral(doc){
-  if(referralBody){
+function renderReferral(doc) {
+  if (referralBody) {
     let tr = document.createElement('tr');
     let data = document.createElement('td');
-    let patname = document.createElement('td');
-    let patsurname = document.createElement('td');
+    let patient = document.createElement('td');
+    let reason = document.createElement('td');
+    let doctor = document.createElement('td');
+    let info = document.createElement('td');
     getPatientData(doc.data().id_pac).then((res) => {
-      patname.textContent = res.name;
-      patsurname.textContent = res.surname;
+      patient.textContent = res.name + " " + res.surname;
     })
+    getDoctorData(doc.data().id_doc).then((res) => {
+      doctor.textContent = res.name + " " + res.surname;
+    })
+    data.textContent = doc.data().data;
+    reason.textContent = doc.data().reason;
+    info.textContent = doc.data().info;
     tr.appendChild(data);
-    tr.appendChild(patname);
-    tr.appendChild(patsurname);
+    tr.appendChild(patient);
+    tr.appendChild(reason);
+    tr.appendChild(doctor);
+    tr.appendChild(info);
     referralBody.appendChild(tr);
   }
 }
 
-
+//Pobieranie danych lekarza
+function getDoctorData(id) {
+  let doctor =
+    getDoc(doc(db, "doctors", id))
+      .then((snapshot) => {
+        return snapshot.data();
+      })
+  return doctor;
+}
 
 //Pobieranie danych pacjenta
 function getPatientData(id) {
@@ -368,6 +386,29 @@ function getPatientData(id) {
   return pat;
 }
 
+function addReferral(doctor){
+  const modal = document.getElementById('modal');
+  const closeModal = document.getElementById('closeModal');
+  const sendDataButton = document.getElementById('referralAddButton');
+  const referralData = document.getElementById('referralData');
+  const referralReason = document.getElementById('referralReason');
+  const referralInfo = document.getElementById('referralInfo');
+  modal.showModal();
+  closeModal.addEventListener('click',()=>{
+    modal.close();
+  })
+  sendDataButton.addEventListener('click',()=>{
+    const newReferral = {
+      data: referralData.value,
+      id_doc: doctor.id_doc,
+      id_pac: doctor.id_pac,
+      info: referralInfo.value,
+      reason: referralReason.value
+    };
+    console.log(newReferral)
+    addDoc(collection(db, "referral"), newReferral);
+  })
+}
 
 //Dodawanie zdjęcia-------------------------------------------------
 const profileImgUpload = document.getElementById('profileImgUpload');

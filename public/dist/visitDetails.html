@@ -29,47 +29,87 @@
 
     <!-- Main -->
     <div class="main">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Imie Pacjenta</th>
-                <th>Nazwisko Pacjenta</th>
-            </tr>
-        </thead>
-        <tbody id="visit-details-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Imie Pacjenta</th>
+                    <th>Nazwisko Pacjenta</th>
+                    <th>Wystaw Skierowanie</th>
+                </tr>
+            </thead>
+            <tbody id="visit-details-table">
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <!-- Modal dodawania skierowania -->
+        <dialog class="modal" id="modal">
+            <h2>Dodaj skierowanie</h2>
+            <form method="dialog">
+                <div class="row">
+                    <!-- <label for="email"><b>E-mail</b></label> -->
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" placeholder="Podaj date" id="referralData">
+                </div>
+                <div class="row">
+                    <!-- <label for="email"><b>E-mail</b></label> -->
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" placeholder="Podaj powód" id="referralReason">
+                </div>
+                <div class="row">
+                    <!-- <label for="email"><b>E-mail</b></label> -->
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" placeholder="Dodatkowe informacje" id="referralInfo">
+                </div>
+                <div class="row button">
+                    <button type="submit" class="registerBttn" id="referralAddButton">Dodaj</button>
+                </div>
+            </form>
+            Tutaj będzie dodawanie skierowania<br>
+            <button id="closeModal">Zamknij</button>
+        </dialog>
     </div>
     <div class="footer">
         Stopka
         <p>Jakieś duperele</p>
     </div>
     <style>
-            * {
-                color: white;
-                font-size: 1rem;
-            }
+        #add-doctor-visit-table,
+        td {
+            border: 1px solid white;
+            text-align: center;
+            font-size: 1rem;
+        }
 
-            #add-doctor-visit-table,td
-            {
-                border: 1px solid white;
-                text-align: center;
-            }
+        .modal {
+            color: black;
+            padding: 1em;
+            width: 30vw;
+            top: 40%;
+            left: 35%;
+        }
 
-            button {
-                color: black;
-                padding: 0.5em;
-            }
+        .modal::backdrop {
+            background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+            opacity: .7;
+        }
 
-            .deleteButton {
-                color: black;
-                background-color: red;
-                padding: 0.5em;
-            }
-        </style>
-        
+        .modal h2 {
+            color: black;
+        }
+
+        button {
+            color: black;
+            padding: 0.5em;
+        }
+
+        .deleteButton {
+            color: black;
+            background-color: red;
+            padding: 0.5em;
+        }
+    </style>
+
     <script src="bundle.js"></script>
 </body>
 

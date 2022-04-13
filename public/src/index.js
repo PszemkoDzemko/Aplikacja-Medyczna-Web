@@ -8,8 +8,7 @@ import {
   browserLocalPersistence,
   onAuthStateChanged,
   sendEmailVerification,
-  sendPasswordResetEmail,
-  reload
+  sendPasswordResetEmail
 } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
@@ -23,19 +22,18 @@ import {
   where,
   query,
   deleteDoc,
-  updateDoc,
-  waitForPendingWrites
+  updateDoc
 } from "firebase/firestore"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyALxo_cxtuu6aIhrMCxmyG6ZvzcpypQSaA",
+  apiKey: "AIzaSyDPX8DsAUsO-19XNRqWDMMgP00YXixk1tE",
   authDomain: "medical-app-25f81.firebaseapp.com",
   databaseURL: "https://medical-app-25f81-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "medical-app-25f81",
   storageBucket: "medical-app-25f81.appspot.com",
   messagingSenderId: "1027058281878",
-  appId: "1:1027058281878:web:34445352cd5508e0c581b7",
-  measurementId: "G-VB8LW8MP2F"
+  appId: "1:1027058281878:web:5f8c9de19cdd0c38c581b7",
+  measurementId: "G-W6STR0FTJS"
 };
 //inicjalizacja firebase
 const app = initializeApp(firebaseConfig);
@@ -129,11 +127,13 @@ if (loginButton) {
     //ustaw sesję lokalną
     if (loginEmail.validity.valid) {
       if (loginPassword.validity.valid) {
+        console.log("elo")
         setPersistence(auth, browserLocalPersistence)
           .then(() => {
             //zaloguj mailem i hasłem
             signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
               .then((userCredential) => {
+                console.log("XDDDD")
                 //tu trzeba sprawdzić czy istnieje taki lekarz i jak nie to wylogować gościa
                 //albo dać opcje założenia konta lekarza
                 //w sensie sparawdzacie czy w kolekcji lekarzy istnieje dokument o id userCredential.user.uid jak istnieje to spoko a jak nie to szybki singout
@@ -147,7 +147,6 @@ if (loginButton) {
                 console.log(errorMessage);
               })
           })
-
       }
     }
   })
@@ -197,7 +196,6 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     //pobieranie id zalogowanego użytkownika
     const uid = user.uid;
-
     //Ustawianie zdjęcia i tekstu
     const profilePic = document.getElementById('profilePic');
     const profileWelcome = document.getElementById('welcomeName');
@@ -225,7 +223,6 @@ onAuthStateChanged(auth, (user) => {
         })
       })//koniec pobierania wizyt
 
-
     //pobieranie zakończonych wizyt
     const doctorVisitDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", true));
     getDocs(doctorVisitDone)
@@ -245,7 +242,6 @@ onAuthStateChanged(auth, (user) => {
         })
       })
   }
-
 });
 
 //Wyświetalanie wizyt lekarza-----------------------------------------
@@ -321,7 +317,6 @@ function renderDoneVisits(doc) {
     tr.appendChild(tdDelete);
     docVisitDoneTable.appendChild(tr);
   }
-
 }
 
 //Usuwanie wizyty--------------------------------------------------
@@ -487,7 +482,6 @@ function showError(error) {
   } else if (error === "not-same-psw") {
     errorP.textContent = "Hasła nie są identyczne";
   }
-
 }
 
 //Trzeba zrobić funkcję wyświetlającą błedy która tworzy jakiegoś diva albo dodaje do istniejącegoi przesyła mu error message

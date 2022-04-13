@@ -20,7 +20,7 @@
             <form action="javascript:void(0);">
                 <div class="row">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <input type="text" id="pswResetEmail" name="email" placeholder="Adres e-mail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                    <input type="text" id="pswResetEmail" name="email" placeholder="Adres e-mail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" oninvalid="this.setCustomValidity('Podaj poprawny adres e-mail')"  oninput="this.setCustomValidity('')">
                 </div>
                 <div class="row button">
                     <button type="submit" id="pswResetBtn" class="registerBttn fancy-button">Wyślij e-mail</button>

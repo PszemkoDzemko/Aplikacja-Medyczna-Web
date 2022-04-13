@@ -74,21 +74,31 @@ const registerSpecialization = document.querySelector('#registerSpec');
 const registerPWZ = document.querySelector('#registerPwz');
 if (registerButton) {
   registerButton.addEventListener('click', () => {
-    if (registerPsw.value === registerPswRepeat.value) {
-      createUserWithEmailAndPassword(auth, registerEmail.value, registerPsw.value)
-        .then((userCredential) => {
-          addDoctorDetails(userCredential.user.uid)
-          sendEmailVerification(userCredential.user)
-            .then(() => { })
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorMessage)
-        })
-    } else {
-      //błąd hasła nie są takie same
-      console.log("hasła nie są takie same")
+    if (registerPsw.validity.valid) {
+      if (registerPsw.value === registerPswRepeat.value) {
+        if (registerName.validity.valid) {
+          if (registerSurname.validity.valid) {
+            if (registerLocalization.validity.valid) {
+              if (registerPWZ.validity.valid) {
+                createUserWithEmailAndPassword(auth, registerEmail.value, registerPsw.value)
+                  .then((userCredential) => {
+                    addDoctorDetails(userCredential.user.uid)
+                    sendEmailVerification(userCredential.user)
+                      .then(() => { })
+                  })
+                  .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorMessage)
+                  })
+              }
+            }
+          }
+        }
+      } else {
+        showError("not-same-psw")
+        console.log("hasła nie są takie same")
+      }
     }
   })
 }
@@ -117,24 +127,29 @@ const loginPassword = document.querySelector('#passwordLogin');
 if (loginButton) {
   loginButton.addEventListener('click', () => {
     //ustaw sesję lokalną
-    setPersistence(auth, browserLocalPersistence)
-      .then(() => {
-        //zaloguj mailem i hasłem
-        signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
-          .then((userCredential) => {
-            //tu trzeba sprawdzić czy istnieje taki lekarz i jak nie to wylogować gościa
-            //albo dać opcje założenia konta lekarza
-            //w sensie sparawdzacie czy w kolekcji lekarzy istnieje dokument o id userCredential.user.uid jak istnieje to spoko a jak nie to szybki singout
-            //i można przenieść na jakąś stronę czy coś
+    if (loginEmail.validity.valid) {
+      if (loginPassword.validity.valid) {
+        setPersistence(auth, browserLocalPersistence)
+          .then(() => {
+            //zaloguj mailem i hasłem
+            signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
+              .then((userCredential) => {
+                //tu trzeba sprawdzić czy istnieje taki lekarz i jak nie to wylogować gościa
+                //albo dać opcje założenia konta lekarza
+                //w sensie sparawdzacie czy w kolekcji lekarzy istnieje dokument o id userCredential.user.uid jak istnieje to spoko a jak nie to szybki singout
+                //i można przenieść na jakąś stronę czy coś
+              })
+              .catch((error) => {
+                //tu są błędy jak coś nie działa np. złe hasło czy coś
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                showError(errorCode);
+                console.log(errorMessage);
+              })
           })
-          .catch((error) => {
-            //tu są błędy jak coś nie działa np. złe hasło czy coś
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            showError(errorCode);
-            console.log(errorMessage);
-          })
-      })
+
+      }
+    }
   })
 }
 
@@ -143,7 +158,8 @@ const pswResetEmail = document.querySelector('#pswResetEmail');
 const pswResetBtn = document.querySelector('#pswResetBtn');
 if (pswResetBtn) {
   pswResetBtn.addEventListener('click', () => {
-    sendPasswordResetEmail(auth, pswResetEmail.value)
+    if (pswResetEmail.validity.valid){
+      sendPasswordResetEmail(auth, pswResetEmail.value)
       .then(() => {
         //wysłano maila z resetem
         window.location.href = 'login.html';
@@ -155,6 +171,7 @@ if (pswResetBtn) {
         showError(errorCode);
         console.log(errorMessage)
       });
+    }
   })
 }
 
@@ -453,20 +470,22 @@ function setProfileImg(imgUrl) {
 function showError(error) {
   const errorDiv = document.getElementById('errorDiv');
   let errorP = document.getElementById('errorP')
-  if(error==="auth/invalid-email"){
-      errorP.textContent = "Nieprawidłowy adres email";
-  }else if(error==="auth/user-not-found"){
+  if (error === "auth/invalid-email") {
+    errorP.textContent = "Nieprawidłowy adres email";
+  } else if (error === "auth/user-not-found") {
     errorP.textContent = "Taki użytkownik nie istnieje";
-  }else if(error==="auth/internal-error"){
+  } else if (error === "auth/internal-error") {
     errorP.textContent = "Podaj hasło";
-  }else if(error==="auth/wrong-password"){
+  } else if (error === "auth/wrong-password") {
     errorP.textContent = "Nieprawidłowe hasło";
-  }else if(error==="auth/missing-email"){
+  } else if (error === "auth/missing-email") {
     errorP.textContent = "E-mail jest wymagany";
-  }else if(error==="auth/weak-password"){
+  } else if (error === "auth/weak-password") {
     errorP.textContent = "Hasło powinno mieć min 6 znaków";
+  } else if (error === "not-same-psw") {
+    errorP.textContent = "Hasła nie są identyczne";
   }
-  
+
 }
 
 //Trzeba zrobić funkcję wyświetlającą błedy która tworzy jakiegoś diva albo dodaje do istniejącegoi przesyła mu error message

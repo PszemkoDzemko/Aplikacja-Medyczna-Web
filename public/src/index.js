@@ -207,7 +207,9 @@ onAuthStateChanged(auth, (user) => {
           snapshot.docs.forEach((doc) => {
             profilePic.src = doc.data().img
             profileWelcome.textContent = " Witaj " + doc.data().name;
-            const profileImg = doc.data().img
+            if(doc.data().img===""){
+              profilePic.src = "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
+            }
           })
         })
     }
@@ -466,7 +468,7 @@ function setProfileImg(imgUrl) {
   });
 }
 
-
+//Wyświetlanie błędów--------------------------------------------------
 function showError(error) {
   const errorDiv = document.getElementById('errorDiv');
   let errorP = document.getElementById('errorP')

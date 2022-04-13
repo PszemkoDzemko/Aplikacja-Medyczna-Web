@@ -29,18 +29,18 @@
 
     <!-- Main -->
     <div class="main">
-        <table class="table">
+        <table id="referral-table" class="table">
             <thead>
                 <tr>
                     <th class="mark">Data wystawienia</th>
                     <th class="mark">Pacjent</th>
-                    <th>Skierowanie na co?</th>
+                    <th>Powód</th>
                     <th>Wystawiający</th>
                     <th>Informacje dodatkowe</th>
                 </tr>
             </thead>
             <tbody id="doctor-referral-table">
-                
+
             </tbody>
         </table>
 
@@ -49,7 +49,19 @@
         Stopka
         <p>Jakieś duperele</p>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            setTimeout(() => $('#referral-table').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Polish.json"
+                }
+            }), 800)
 
+        });
+    </script>
     <script src="bundle.js"></script>
 </body>
 

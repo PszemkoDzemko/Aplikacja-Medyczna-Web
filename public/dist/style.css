@@ -533,7 +533,10 @@ input[type=search] {
 #registerName:not(:placeholder-shown):invalid,
 #registerPsw-repeat:not(:placeholder-shown):invalid,
 #registerPsw:not(:placeholder-shown):invalid,
-#registerEmail:not(:placeholder-shown):invalid
+#registerEmail:not(:placeholder-shown):invalid,
+#emailLogin:not(:placeholder-shown):invalid,
+#passwordLogin:not(:placeholder-shown):invalid,
+#pswResetEmail:not(:placeholder-shown):invalid
 {
     border-color: red;
     outline: none;
@@ -546,7 +549,10 @@ input[type=search] {
 #registerName:not(:placeholder-shown):required:valid,
 #registerPsw-repeat:not(:placeholder-shown):required:valid,
 #registerPsw:not(:placeholder-shown):required:valid,
-#registerEmail:not(:placeholder-shown):required:valid
+#registerEmail:not(:placeholder-shown):required:valid,
+#emailLogin:not(:placeholder-shown):required:valid,
+#passwordLogin:not(:placeholder-shown):required:valid,
+#pswResetEmail:not(:placeholder-shown):required:valid
 {
     border-color: #4dcc23;
     outline: none;

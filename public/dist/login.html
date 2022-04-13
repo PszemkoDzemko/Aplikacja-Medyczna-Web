@@ -20,11 +20,11 @@
       <form action="javascript:void(0);">
         <div class="row">
           <i class="fa fa-user" aria-hidden="true"></i>
-          <input type="text" id="emailLogin" name="email" placeholder="Adres e-mail">
+          <input type="text" id="emailLogin" name="email" placeholder="Adres e-mail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
         </div>
         <div class="row">
           <i class="fa fa-lock" aria-hidden="true"></i>
-          <input type="password" id="passwordLogin" autocomplete="on" name="email" placeholder="Hasło">
+          <input type="password" id="passwordLogin" autocomplete="on" name="email" placeholder="Hasło"  required pattern=".{6,}">
         </div>
         <div class="pass"><a class="fancy-link" href="pswReset.html">Zapomniałeś hasła?</a></div>
         <div class="row button">

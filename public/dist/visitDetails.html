@@ -23,7 +23,7 @@
             <a class="but" href="profile.html">Profil</a>
             <a class="but" href="settings.html">Ustawienia</a>
             <a class="but" href="help.html">Pomoc</a>
-            <button style="float: left;" id="SignOutBtn">Wyloguj się</button>
+            <button style="float: left;" class="signOutButttonMenu" id="SignOutBtn">Wyloguj się</button>
         </div>
     </div>
 
@@ -33,9 +33,12 @@
             <thead>
                 <tr>
                     <th>Data</th>
-                    <th>Imie Pacjenta</th>
-                    <th>Nazwisko Pacjenta</th>
+                    <th>Imie i Nazwisko</th>
+                    <th>Pesel</th>
+                    <th>Telefon</th>
+                    <th>Edytuj date</th>
                     <th>Wystaw Skierowanie</th>
+                    <th>Usuń wizytę</th>
                 </tr>
             </thead>
             <tbody id="visit-details-table">
@@ -43,30 +46,43 @@
             </tbody>
         </table>
         <!-- Modal dodawania skierowania -->
-        <dialog class="modal" id="modal">
+        <dialog class="referralModal" id="referralModal">
             <h2>Dodaj skierowanie</h2>
             <form method="dialog">
                 <div class="row">
-                    <!-- <label for="email"><b>E-mail</b></label> -->
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <input type="text" placeholder="Podaj date" id="referralData">
+                    <label for="referralData"><b>Podaj datę</b></label>
+                    <input type="date" placeholder="Podaj date" id="referralData">
                 </div>
                 <div class="row">
-                    <!-- <label for="email"><b>E-mail</b></label> -->
-                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <label for="referralReason"><b>Podaj powód skierowania</b></label>
                     <input type="text" placeholder="Podaj powód" id="referralReason">
                 </div>
                 <div class="row">
-                    <!-- <label for="email"><b>E-mail</b></label> -->
-                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <label for="referralInfo"><b>Dodatkowe informacje</b></label>
                     <input type="text" placeholder="Dodatkowe informacje" id="referralInfo">
                 </div>
                 <div class="row button">
-                    <button type="submit" class="registerBttn" id="referralAddButton">Dodaj</button>
+                    <button type="submit" class="registerBttn fancy-button" id="referralAddButton">Dodaj</button>
                 </div>
             </form>
-            Tutaj będzie dodawanie skierowania<br>
-            <button id="closeModal">Zamknij</button>
+            <button id="closeReferralModal">Zamknij</button>
+        </dialog>
+        <dialog class="editModal" id="editModal">
+            <h2>Dodaj skierowanie</h2>
+            <form method="dialog">
+                <div class="row">
+                    <label for="newVisitData"><b>Wybierz date</b></label>
+                    <input type="date" placeholder="Podaj date" id="newVisitData">
+                </div>
+                <div class="row">
+                    <label for="newVisitTime"><b>Wybierz czas</b></label>
+                    <input type="time" placeholder="Podaj powód" id="newVisitTime">
+                </div>
+                <div class="row button">
+                    <button type="submit" class="registerBttn fancy-button" id="editVisitApplyButton">Dodaj</button>
+                </div>
+            </form>
+            <button id="closeEditModal">Zamknij</button>
         </dialog>
     </div>
     <div class="footer">
@@ -81,7 +97,7 @@
             font-size: 1rem;
         }
 
-        .modal {
+        .referralModal {
             color: black;
             padding: 1em;
             width: 30vw;
@@ -89,12 +105,16 @@
             left: 35%;
         }
 
-        .modal::backdrop {
+        .referralModal::backdrop {
             background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
             opacity: .7;
         }
 
-        .modal h2 {
+        .referralModal input{
+            padding: 0.5em;
+            margin: 0.3em;
+        }
+        .referralModal h2 {
             color: black;
         }
 
@@ -107,6 +127,7 @@
             color: black;
             background-color: red;
             padding: 0.5em;
+            border-radius: 0.2em;
         }
     </style>
 

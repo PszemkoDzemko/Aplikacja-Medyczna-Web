@@ -49,7 +49,16 @@ onAuthStateChanged(auth, (user) => {
     if (index) {
       //użytkownik jest zalogowany
       //wrzuć go na mainpage
-      window.location.href = 'mainpage.html';
+      console.log(user.uid)
+      getDoc(doc(db, "doctors", user.uid))
+        .then((snapshot) => {
+          if (snapshot.data() === undefined) {
+            sessionStorage.setItem("uid", user.uid);
+            window.location.href = 'addDoctorData.html';
+          } else {
+            window.location.href = 'mainpage.html';
+          }
+        })
     } else if (register) {
     }
   } else {
@@ -100,6 +109,24 @@ if (registerButton) {
     }
   })
 }
+//Jak sie pacjent zaloguje i chce być lekarzem to to się dzieje xD----
+const addDoctorDataButton = document.getElementById('addDoctorDataButton')
+if (addDoctorDataButton) {
+  addDoctorDataButton.addEventListener('click', () => {
+    const id = sessionStorage.getItem('uid');
+    if (registerName.validity.valid) {
+      if (registerSurname.validity.valid) {
+        if (registerLocalization.validity.valid) {
+          if (registerPWZ.validity.valid) {
+            addDoctorDetails(id)
+          }
+        }
+      }
+    }
+  })
+}
+
+//Dodawanie danych lekarza--------------------------------------------
 async function addDoctorDetails(id) {
   const newDoc = {
     uid: id,
@@ -117,6 +144,8 @@ async function addDoctorDetails(id) {
   window.location.href = 'mainpage.html';
 }
 
+
+
 //Logowanie------------------------------------------------------------
 //pobieranie danych
 const loginButton = document.querySelector('#loginBtn');
@@ -124,16 +153,15 @@ const loginEmail = document.querySelector('#emailLogin');
 const loginPassword = document.querySelector('#passwordLogin');
 if (loginButton) {
   loginButton.addEventListener('click', () => {
-    //ustaw sesję lokalną
+    //walidacja
     if (loginEmail.validity.valid) {
       if (loginPassword.validity.valid) {
-        console.log("elo")
+        //ustaw sesję lokalną
         setPersistence(auth, browserLocalPersistence)
           .then(() => {
             //zaloguj mailem i hasłem
             signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
               .then((userCredential) => {
-                console.log("XDDDD")
                 //tu trzeba sprawdzić czy istnieje taki lekarz i jak nie to wylogować gościa
                 //albo dać opcje założenia konta lekarza
                 //w sensie sparawdzacie czy w kolekcji lekarzy istnieje dokument o id userCredential.user.uid jak istnieje to spoko a jak nie to szybki singout
@@ -144,7 +172,7 @@ if (loginButton) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 showError(errorCode);
-                console.log(errorMessage);
+                // console.log(errorMessage);
               })
           })
       }
@@ -157,19 +185,19 @@ const pswResetEmail = document.querySelector('#pswResetEmail');
 const pswResetBtn = document.querySelector('#pswResetBtn');
 if (pswResetBtn) {
   pswResetBtn.addEventListener('click', () => {
-    if (pswResetEmail.validity.valid){
+    if (pswResetEmail.validity.valid) {
       sendPasswordResetEmail(auth, pswResetEmail.value)
-      .then(() => {
-        //wysłano maila z resetem
-        window.location.href = 'login.html';
-      })
-      .catch((error) => {
-        //błedy do przesłania i wyświetlania w jakimś div
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        showError(errorCode);
-        console.log(errorMessage)
-      });
+        .then(() => {
+          //wysłano maila z resetem
+          window.location.href = 'login.html';
+        })
+        .catch((error) => {
+          //błedy do przesłania i wyświetlania w jakimś div
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          showError(errorCode);
+          console.log(errorMessage)
+        });
     }
   })
 }
@@ -205,7 +233,7 @@ onAuthStateChanged(auth, (user) => {
           snapshot.docs.forEach((doc) => {
             profilePic.src = doc.data().img
             profileWelcome.textContent = " Witaj " + doc.data().name;
-            if(doc.data().img===""){
+            if (doc.data().img === "") {
               profilePic.src = "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
             }
           })
@@ -322,16 +350,16 @@ function renderDoneVisits(doc) {
 //Usuwanie wizyty--------------------------------------------------
 function deleteVisit(id) {
   deleteDoc(doc(db, "visits", id));
-  setTimeout(() => { window.location.reload(true) }, 500)
+  setTimeout(() => { window.location.href = 'mainpage.html' }, 500)
 }
 
-//Potwierdzanie wizyty---------------------------------------------
+//Potwierdzanie wizyty----------------------------------------------
 function doneVisit(id) {
   updateDoc(doc(db, "visits", id), { done: true });
   setTimeout(() => { window.location.reload(true) }, 500)
 }
 
-//Szczegóły wiztyty o ile są potrzebne w ogóle???????????????????????
+//Szczegóły wiztyty-------------------------------------------------
 //Tu jest problem z tym chyba że nie bedziemy odświerzać strony tylko zmienimy diva 
 const visitDetailsBody = document.getElementById('visitDetailsBody');
 if (visitDetailsBody) {
@@ -340,34 +368,58 @@ if (visitDetailsBody) {
   sessionStorage.clear;
 }
 function detailsVisit(doc) {
-  const docVisitDetailsTable = document.querySelector('#visit-details-table');
+  const docVisitDetailsTable = document.getElementById('visit-details-table');
   if (docVisitDetailsTable) {
     let tr = document.createElement('tr');
     let data = document.createElement('td');
     let patname = document.createElement('td');
-    let patsurname = document.createElement('td');
+    let patpesel = document.createElement('td');
+    let patphone = document.createElement('td');
+    let tdBtnEditDate = document.createElement('td');
+    let editDateButton = document.createElement('button');
     let tdBtnReferral = document.createElement('td');
     let referralButton = document.createElement('button');
+    let tdBtnDelete = document.createElement('td');
+    let deleteVisitButton = document.createElement('button');
     referralButton.textContent = "Wystaw";
-    data.textContent = doc.data + ' ' + doc.hour;
+    editDateButton.textContent = "Edytuj";
+    deleteVisitButton.textContent = "Usuń";
+    deleteVisitButton.className = "deleteButton fancy-button";
+    referralButton.className = "table-button fancy-button";
+    editDateButton.className = "table-button fancy-button";
+    getVisitData(doc.id).then((res) => {
+      data.textContent = res.data + ' ' + res.hour;
+    })
     getPatientData(doc.id_pac).then((res) => {
-      patname.textContent = res.name;
-      patsurname.textContent = res.surname;
+      patname.textContent = res.name + ' ' + res.surname;
+      patpesel.textContent = res.pesel;
+      patphone.textContent = res.phone;
+    })
+    editDateButton.addEventListener('click', () => {
+      editVisitDate(doc.id)
     })
     referralButton.addEventListener('click', () => {
       addReferral(doc)
     })
+    deleteVisitButton.addEventListener('click', () => {
+      deleteVisit(doc.id)
+    })
     tr.setAttribute('data-id', doc.id);
     tr.appendChild(data);
     tr.appendChild(patname);
-    tr.appendChild(patsurname);
+    tr.appendChild(patpesel);
+    tr.appendChild(patphone);
+    tdBtnEditDate.appendChild(editDateButton);
     tdBtnReferral.appendChild(referralButton);
+    tdBtnDelete.appendChild(deleteVisitButton);
+    tr.appendChild(tdBtnEditDate);
     tr.appendChild(tdBtnReferral);
+    tr.appendChild(tdBtnDelete);
     docVisitDetailsTable.appendChild(tr);
   }
 }
 
-//Wyświetlanie skierowań
+//Wyświetlanie skierowań-----------------------------------------------
 const referralBody = document.getElementById('doctor-referral-table');
 function renderReferral(doc) {
   if (referralBody) {
@@ -395,7 +447,7 @@ function renderReferral(doc) {
   }
 }
 
-//Pobieranie danych lekarza
+//Pobieranie danych lekarza-----------------------------------------
 function getDoctorData(id) {
   let doctor =
     getDoc(doc(db, "doctors", id))
@@ -405,7 +457,7 @@ function getDoctorData(id) {
   return doctor;
 }
 
-//Pobieranie danych pacjenta
+//Pobieranie danych pacjenta----------------------------------------
 function getPatientData(id) {
   let pat =
     getDoc(doc(db, "users", id))
@@ -415,9 +467,19 @@ function getPatientData(id) {
   return pat;
 }
 
+//Pobieranie danych wizyty------------------------------------------
+function getVisitData(id) {
+  let visit = getDoc(doc(db, "visits", id))
+    .then((snapshot) => {
+      return snapshot.data();
+    })
+  return visit;
+}
+
+//Dodawanie skierownia----------------------------------------------
 function addReferral(doctor) {
-  const modal = document.getElementById('modal');
-  const closeModal = document.getElementById('closeModal');
+  const modal = document.getElementById('referralModal');
+  const closeModal = document.getElementById('closeReferralModal');
   const sendDataButton = document.getElementById('referralAddButton');
   const referralData = document.getElementById('referralData');
   const referralReason = document.getElementById('referralReason');
@@ -436,6 +498,29 @@ function addReferral(doctor) {
     };
     console.log(newReferral)
     addDoc(collection(db, "referral"), newReferral);
+  })
+}
+
+//Edytowanie daty wizyty
+function editVisitDate(id) {
+  const modal = document.getElementById('editModal');
+  const closeModal = document.getElementById('closeEditModal');
+  const sendDataButton = document.getElementById('editVisitApplyButton');
+  const newVisitDate = document.getElementById('newVisitData');
+  const newVisitTime = document.getElementById('newVisitTime');
+  modal.showModal();
+  closeModal.addEventListener('click', () => {
+    modal.close()
+  })
+  sendDataButton.addEventListener('click', () => {
+    0
+    if (newVisitDate.value !== "") {
+      updateDoc(doc(db, "visits", id), { data: newVisitDate.value });
+    }
+    if (newVisitTime.value !== "") {
+      updateDoc(doc(db, "visits", id), { hour: newVisitTime.value });
+    }
+    setTimeout(() => { window.location.reload(true) }, 500)
   })
 }
 

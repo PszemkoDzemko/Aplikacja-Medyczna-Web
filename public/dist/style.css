@@ -17,7 +17,7 @@
 }
 
 body {
-    width: 100vw;
+    width: 100%;
     /* background-color: #75CFA9; */
     background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
 }
@@ -211,9 +211,8 @@ label {
     width: 10vw;
     text-align: justify;
 }
-
 .profileMenu>a,
-#SignOutBtn {
+.signOutButttonMenu {
     display: none;
     float: left;
     background-color: rgba(19, 136, 113, 0.5);
@@ -228,11 +227,11 @@ label {
     width: 8vw;
 }
 
-.profileMenu:hover>#SignOutBtn {
+.profileMenu:hover>.signOutButttonMenu {
     display: block;
 }
 
-#SignOutBtn {
+.signOutButttonMenu {
     padding: 0.3em;
     width: 8vw;
     height: 4vh;
@@ -466,9 +465,10 @@ input[type=search] {
 .dataTables_wrapper .dataTables_info,
 .dataTables_wrapper .dataTables_processing,
 .dataTables_wrapper .dataTables_paginate {
-    color: #333;
+    color: rgb(255, 255, 255);
 }
 
+/* Błędy */
 .error {
     background-color: rgb(255, 91, 91);
     margin-inline: 0.5em;
@@ -476,11 +476,13 @@ input[type=search] {
     text-align: center;
 }
 
-.fancy-link{
-    position: relative;;
+/* Super fancy linki */
+.fancy-link {
+    position: relative;
+    ;
 }
 
-.fancy-link::after{
+.fancy-link::after {
     position: absolute;
     content: '';
     left: 0;
@@ -494,26 +496,27 @@ input[type=search] {
     transition: transform 200ms ease-in;
 }
 
-.fancy-link:hover::after{
+.fancy-link:hover::after {
     transform: scaleX(1);
     transform-origin: left;
 }
 
-.fancy-button{
+/* Super fancy przyciski */
+.fancy-button {
     cursor: pointer;
     position: relative;
     z-index: 1;
     border-radius: 0.2em;
 }
 
-.fancy-button::after{
+.fancy-button::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background:rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 0.2em;
     z-index: -1;
 
@@ -522,7 +525,7 @@ input[type=search] {
     transition: transform 400ms ease-in;
 }
 
-.fancy-button:hover::after{
+.fancy-button:hover::after {
     transform: scaleX(1);
     transform-origin: left;
 }
@@ -536,8 +539,7 @@ input[type=search] {
 #registerEmail:not(:placeholder-shown):invalid,
 #emailLogin:not(:placeholder-shown):invalid,
 #passwordLogin:not(:placeholder-shown):invalid,
-#pswResetEmail:not(:placeholder-shown):invalid
-{
+#pswResetEmail:not(:placeholder-shown):invalid {
     border-color: red;
     outline: none;
     box-shadow: 0 0 0.2em red;
@@ -552,9 +554,16 @@ input[type=search] {
 #registerEmail:not(:placeholder-shown):required:valid,
 #emailLogin:not(:placeholder-shown):required:valid,
 #passwordLogin:not(:placeholder-shown):required:valid,
-#pswResetEmail:not(:placeholder-shown):required:valid
-{
+#pswResetEmail:not(:placeholder-shown):required:valid {
     border-color: #4dcc23;
     outline: none;
     box-shadow: 0 0 0.2em #4dcc23;
+}
+
+/* Przyciski w tabelce Szczegóły */
+.table-button {
+    background-color: var(--glowny-kolor-tla);
+    border: none;
+    border-radius: 0.2em;
+    font-size: 1em;
 }

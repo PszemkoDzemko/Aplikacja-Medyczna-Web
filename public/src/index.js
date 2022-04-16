@@ -52,8 +52,8 @@ onAuthStateChanged(auth, (user) => {
       console.log(user.uid)
       getDoc(doc(db, "doctors", user.uid))
         .then((snapshot) => {
+          sessionStorage.setItem("uid", user.uid);
           if (snapshot.data() === undefined) {
-            sessionStorage.setItem("uid", user.uid);
             window.location.href = 'addDoctorData.html';
           } else {
             window.location.href = 'mainpage.html';
@@ -68,7 +68,7 @@ onAuthStateChanged(auth, (user) => {
     }
   }
 });
-
+const uid = sessionStorage.getItem('uid');
 //Rejestracja----------------------------------------------------------
 const registerButton = document.querySelector('#registerBtn');
 const registerName = document.querySelector('#registerName');
@@ -209,6 +209,7 @@ if (btnSignOut) {
     setPersistence(auth, browserLocalPersistence)
       .then(() => {
         signOut(auth).then(() => {
+          sessionStorage.clear();
           window.location.href = './index.html';
         }).catch((error) => {
           //nie udało się wylogować czy coś
@@ -219,58 +220,100 @@ if (btnSignOut) {
   })
 }
 
-//Funkcja, która po zalogoawniu sprawdza użytkownika i odczytuje dane z bazy
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    //pobieranie id zalogowanego użytkownika
-    const uid = user.uid;
-    //Ustawianie zdjęcia i tekstu
-    const profilePic = document.getElementById('profilePic');
-    const profileWelcome = document.getElementById('welcomeName');
-    if (profilePic) {
-      getDocs(query(collection(db, "doctors"), where("uid", "==", uid)))
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            profilePic.src = doc.data().img
-            profileWelcome.textContent = " Witaj " + doc.data().name;
-            if (doc.data().img === "") {
-              profilePic.src = "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
-            }
-          })
-        })
-    }
+//Ustawianie zdjęcia i tekstu na NavBarze
+const profilePic = document.getElementById('profilePic');
+const profileWelcome = document.getElementById('welcomeName');
+if (profilePic) {
+  getDoc(doc(db, "doctors", uid))
+    .then((snapshot) => {
+      profilePic.src = snapshot.data().img
+      profileWelcome.textContent = " Witaj " + snapshot.data().name;
+      if (snapshot.data().img === "") {
+        profilePic.src = "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
+      }
+    })
+}
 
-    //Pobieranie z bazy nieodbytych wizyt lekarza i przekazywanie do funkcji wyżej
-    //pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika
-    const doctorVisitNotDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", false));
-    getDocs(doctorVisitNotDone)
-      .then((snapshot) => {
-        //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
-        snapshot.docs.forEach((doc) => {
-          renderVisits(doc)
-        })
-      })//koniec pobierania wizyt
+//Pod-Strona Profile
+const profilePage = document.getElementById('profilePage');
+const profilePagePic = document.getElementById('profilePagePic');
+const nameSurnameProfilePage = document.getElementById('nameSurProfilePage');
+const rating_0 = document.getElementById('rating2-0');
+const rating_05 = document.getElementById('rating2-05');
+const rating_10 = document.getElementById('rating2-10');
+const rating_15 = document.getElementById('rating2-15');
+const rating_20 = document.getElementById('rating2-20');
+const rating_25 = document.getElementById('rating2-25');
+const rating_30 = document.getElementById('rating2-30');
+const rating_35 = document.getElementById('rating2-35');
+const rating_40 = document.getElementById('rating2-40');
+const rating_45 = document.getElementById('rating2-45');
+const rating_50 = document.getElementById('rating2-50');
+if (profilePage) {
+  getDoc(doc(db, "doctors", uid))
+    .then((snapshot) => {
+      profilePagePic.src = snapshot.data().img
+      nameSurnameProfilePage.textContent = snapshot.data().name + ' ' + snapshot.data().surname;
+      const rating = snapshot.data().rating / snapshot.data().nrRating;
+      if (snapshot.data().img === "") {
+        profilePagePic.src = "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
+      }
+      //Ocena
+      if (rating >= 0 && rating < 0.5) {
+        rating_0.checked = true;
+      } if (rating >= 0.5 && rating < 1) {
+        rating_05.checked = true;
+      } if (rating >= 1 && rating < 1.5) {
+        rating_10.checked = true;
+      } if (rating >= 1.5 && rating < 2) {
+        rating_15.checked = true;
+      } if (rating >= 2 && rating < 2.5) {
+        rating_20.checked = true;
+      } if (rating >= 2.5 && rating < 3) {
+        rating_25.checked = true;
+      } if (rating >= 3 && rating < 3.5) {
+        rating_30.checked = true;
+      } if (rating >= 3.5 && rating < 4) {
+        rating_35.checked = true;
+      } if (rating >= 4 && rating < 4.5) {
+        rating_40.checked = true;
+      } if (rating >= 4.5 && rating < 5) {
+        rating_45.checked = true;
+      } if (rating >= 5) {
+        rating_50.checked = true;
+      }
+    })
+}
 
-    //pobieranie zakończonych wizyt
-    const doctorVisitDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", true));
-    getDocs(doctorVisitDone)
-      .then((snapshot) => {
-        //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
-        snapshot.docs.forEach((doc) => {
-          renderDoneVisits(doc)
-        })
-      })
+//Pobieranie z bazy nieodbytych wizyt lekarza i przekazywanie do funkcji wyżej
+//pobieranie z bazy danych do zmiennej wizyt gdzie id_doc równa się id naszego zalogowanego użytkownika
+const doctorVisitNotDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", false));
+getDocs(doctorVisitNotDone)
+  .then((snapshot) => {
+    //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
+    snapshot.docs.forEach((doc) => {
+      renderVisits(doc)
+    })
+  })//koniec pobierania wizyt
 
-    //Pobieranie skierowań lekarza
-    const doctorReferralDone = query(collection(db, "referral"), where("id_doc", "==", uid));
-    getDocs(doctorReferralDone)
-      .then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          renderReferral(doc);
-        })
-      })
-  }
-});
+//pobieranie zakończonych wizyt
+const doctorVisitDone = query(collection(db, "visits"), where("id_doc", "==", uid), where("done", "==", true));
+getDocs(doctorVisitDone)
+  .then((snapshot) => {
+    //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDocs
+    snapshot.docs.forEach((doc) => {
+      renderDoneVisits(doc)
+    })
+  })
+
+//Pobieranie skierowań lekarza
+const doctorReferralDone = query(collection(db, "referral"), where("id_doc", "==", uid));
+getDocs(doctorReferralDone)
+  .then((snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      renderReferral(doc);
+    })
+  })
 
 //Wyświetalanie wizyt lekarza-----------------------------------------
 const docVisitTable = document.querySelector('#add-doctor-visit-table');

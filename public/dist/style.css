@@ -211,6 +211,7 @@ label {
     width: 10vw;
     text-align: justify;
 }
+
 .profileMenu>a,
 .signOutButttonMenu {
     display: none;
@@ -566,4 +567,46 @@ input[type=search] {
     border: none;
     border-radius: 0.2em;
     font-size: 1em;
+}
+
+/* Gwiazdki ocena lekarza */
+/* use display:inline-flex to prevent whitespace issues. alternatively, you can put all the children of .rating-group on a single line */
+.rating-group {
+    display: inline-flex;
+}
+
+/* hide radio inputs */
+.rating__input {
+    position: absolute !important;
+    left: -9999px !important;
+}
+
+/* set icon padding and size */
+.rating__label {
+    cursor: pointer;
+    /* if you change the left/right padding, update the margin-right property of .rating__label--half as well. */
+    padding: 0 0.1em;
+    font-size: 2rem;
+}
+
+/* add padding and positioning to half star labels */
+.rating__label--half {
+    padding-right: 0;
+    margin-right: -0.6em;
+    z-index: 2;
+}
+
+/* set default star color */
+.rating__icon--star {
+    color: orange;
+}
+
+/* set color of none icon when unchecked */
+.rating__icon--none {
+    color: #eee;
+}
+
+/* if any input is checked, make its following siblings grey */
+.rating__input:checked~.rating__label .rating__icon--star {
+    color: #ddd;
 }

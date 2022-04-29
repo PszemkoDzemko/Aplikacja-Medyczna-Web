@@ -537,10 +537,12 @@ function addReferral(doctor) {
       id_doc: doctor.id_doc,
       id_pac: doctor.id_pac,
       info: referralInfo.value,
-      reason: referralReason.value
+      reason: referralReason.value,
+      done: false
     };
-    console.log(newReferral)
-    addDoc(collection(db, "referral"), newReferral);
+    addDoc(collection(db, "referral"), newReferral).then((res)=>{
+      updateDoc(doc(db, "referral", res.id), { id: res.id });
+    })
   })
 }
 

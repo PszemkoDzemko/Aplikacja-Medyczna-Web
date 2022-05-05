@@ -19,6 +19,8 @@ import {
   setDoc,
   addDoc,
   doc,
+  orderBy,
+  limit,
   where,
   query,
   deleteDoc,
@@ -623,7 +625,74 @@ function showError(error) {
   }
 }
 
+// funkcja do potweirdzenia 
+function confirmSubmit( abc)
+{
+var agree=confirm(abc);
+if (agree)
+ return true ;
+else
+ return false ;
+}
+
+// wczytywanie lekarzy na strone glowna
+const doctorsView = document.querySelector('#doctorsView');
+if (doctorsView) {
+  var doc_id_temp = query(collection(db, "doctors"), orderBy("uid"), limit(4));
+  getDocs(doc_id_temp)
+  .then((snapshot) => {
+    //tu dla każdego odczytanego dokumentu wywołujemy funkcje renderDoctors
+    snapshot.docs.forEach((doc) => {
+      renderDoctors(doc);
+    })
+  })
+}
+
+function renderDoctors(doc) {
+  
+  const doctorsView = document.querySelector('#doctorsView');
+  
+  if (doctorsView) {
+    getDoctorData(doc.data().uid).then((res) => {
+      doctorsView.innerHTML = doctorsView.innerHTML + `
+      <div class="col-lg-6 mt-4 mt-lg-0">
+            <div class="member d-flex align-items-start" style="width: 546px; height: 240px;">
+              <div class="pic"><img src="${res.img}" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4 >${res.name} ${res.surname}</h4>
+                <span>${res.specialization}</span>
+                <p>${res.localization}</p>
+                <div class="social">
+                  <a href=""><i class="ri-twitter-fill"></i></a>
+                  <a href=""><i class="ri-facebook-fill"></i></a>
+                  <a href=""><i class="ri-instagram-fill"></i></a>
+                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div>`;
+    })
+  }
+}
+
+/*console.log(getCount("doctors"));
+
+// licznik nie działa 
+function getCount(col) {
+  // Sum the count of each shard in the subcollection
+  return db.collection(col).get().then((snapshot) => {
+      let total_count = 0;
+      snapshot.forEach((doc) => {
+          total_count += doc.data().count;
+      });
+
+      return total_count;
+  });
+}*/
+
 //Trzeba zrobić funkcję wyświetlającą błedy która tworzy jakiegoś diva albo dodaje do istniejącegoi przesyła mu error message
 //ewentualnie zmiana opcji display z none na block i się wtedy pojawi div
 
 //co do wyświetlania innych rzeczy to na górze miacie wyświetlanie w tabelce wizyt danego lekarza
+
+

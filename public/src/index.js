@@ -392,8 +392,17 @@ function renderDoneVisits(doc) {
 
 //Usuwanie wizyty--------------------------------------------------
 function deleteVisit(id) {
-  deleteDoc(doc(db, "visits", id));
-  setTimeout(() => { window.location.href = 'mainpage.html' }, 500)
+  const delModal = document.getElementById('delConfirmModal');
+  const conDeleteBtn = document.getElementById('delConfirmButton');
+  const closeDelModal = document.getElementById('closeDelConfirmModal');
+  delModal.showModal();
+  closeDelModal.addEventListener('click', () => {
+    delModal.close()
+  })
+  conDeleteBtn.addEventListener('click',()=>{
+    deleteDoc(doc(db, "visits", id));
+    setTimeout(() => { window.location.href = 'mainpage.html' }, 500)
+  })
 }
 
 //Potwierdzanie wizyty----------------------------------------------

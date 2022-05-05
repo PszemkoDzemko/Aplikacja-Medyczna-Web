@@ -9,6 +9,7 @@
     <title>Medopek</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
 <body>
@@ -51,6 +52,25 @@
         Stopka
         <p>Jakieś duperele</p>
     </div>
+    <!-- Modal HTML -->
+    <dialog id="delConfirmModal" class="modal fade">
+	    <div class="modal-dialog modal-confirm">
+		    <div class="modal-content">
+			    <div class="modal-header flex-column">
+				    <div class="icon-box">
+					    <i class="material-icons">&#xE5CD;</i>
+				    </div>						
+				    <h4 class="modal-title w-100">Chcesz usunąć tą wizytę?</h4>	
+                    
+			    </div>
+			    <div class="modal-footer justify-content-center">
+				    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeDelConfirmModal">Zamknij</button>
+				    <button type="button" class="btn btn-danger" id="delConfirmButton">Usuń</button>
+			    </div>
+		    </div>
+	    </div>
+    </dialog>   
+<!--
     <dialog class="delConfirmModal" id="delConfirmModal">
         <h2>Chcesz usunąć tą wizytę?</h2>
         <form method="dialog">
@@ -58,6 +78,8 @@
         </form>
         <button id="closeDelConfirmModal">Zamknij</button>
     </dialog>
+-->
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>

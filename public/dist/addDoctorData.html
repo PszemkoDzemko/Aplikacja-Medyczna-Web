@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <title>Medopek</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body id="visitDetailsBody">
+    <!-- Main -->
+    <div class="main">
+        <div class="containerReg">
+            <div class="wrapper">
+              <form action="javascript:void(0);">
+                <div class="title2">Dodaj dane lekarza
+                </div>
+                <div class="row">
+                  <!-- <label for="psw-repeat"><b>Imie</b></label> -->
+                  <i class="fa fa-user-circle" aria-hidden="true"></i>
+                  <input type="text" placeholder="Podaj imie" name="name" id="registerName" required pattern=".{2,}" oninvalid="this.setCustomValidity('Imię jest wymagane')"  oninput="this.setCustomValidity('')">
+                </div>
+                <div class="row">
+                  <!-- <label for="psw-repeat"><b>Nazwisko</b></label> -->
+                  <i class="fa fa-user-circle" aria-hidden="true"></i>
+                  <input type="text" placeholder="Podaj nazwisko" name="surname" id="registerSurname" required pattern=".{2,}" oninvalid="this.setCustomValidity('Nazwisko jest wymagane')"  oninput="this.setCustomValidity('')">
+                </div>
+                <div class="row">
+                  <!-- <label for="psw-repeat"><b>Adress</b></label> -->
+                  <i class="fa fa-home" aria-hidden="true"></i>
+                  <input type="text" placeholder="Podaj adres" name="localization" id="registerLocalization" required pattern=".{2,}" oninvalid="this.setCustomValidity('Adres jest wymagane')"  oninput="this.setCustomValidity('')">
+                </div>
+                <div class="row">
+                  <!-- <label for="psw-repeat"><b>Numer PWZ</b></label> -->
+                  <i class="fa fa-address-card" aria-hidden="true"></i>
+                  <input type="text" placeholder="Podaj numer PWZ" name="pwz" id="registerPwz" required pattern="[0-9]{4,}" oninvalid="this.setCustomValidity('Numer PWZ musi mieć min. 4 cyfry')"  oninput="this.setCustomValidity('')">
+                </div>
+                <div class="row">
+                  <label for="docSpec">Wybierz specjalizacje:</label>
+                  <select name="docSpec" id="registerSpec" class="spec">
+                    <option value="Ginekolog">Ginekolog</option>
+                    <option value="Onkolog">Onkolog</option>
+                    <option value="Neurolog">Neurolog</option>
+                    <option value="Ortopeda">Ortopeda</option>
+                  </select>
+                </div>
+                <div class="row button">
+                  <button type="submit" class="registerBttn fancy-button" id="addDoctorDataButton">Dodaj dane</button>
+                </div>
+                <div class="row">
+                  <div class="formFooter">
+                    <button type="submit" class="signOutButton fancy-button" id="SignOutBtn">Wyloguj się</button>
+                  </div>
+                </div>
+                <div class="error" id="errorDiv">
+                  <p id="errorP"></p>
+                </div>
+            </div>
+            </form>
+        
+          </div>
+          </div>
+    </div>
+    <div class="footer">
+        Stopka
+        <p>Jakieś duperele</p>
+    </div>
+
+    <script src="bundle.js"></script>
+</body>
+
+</html>

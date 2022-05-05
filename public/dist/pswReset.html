@@ -17,18 +17,21 @@
             <div class="title">Zresetuj hasło
                 <img src="images/logo4.png" class="logo">
             </div>
-            <form>
+            <form action="javascript:void(0);">
                 <div class="row">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <input type="text" id="pswResetEmail" name="email" placeholder="Adres e-mail">
+                    <input type="text" class="validation" id="pswResetEmail" name="email" placeholder="Adres e-mail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" oninvalid="this.setCustomValidity('Podaj poprawny adres e-mail')"  oninput="this.setCustomValidity('')">
                 </div>
                 <div class="row button">
-                    <input type="button" id="pswResetBtn" value="Wyślij e-mail">
+                    <button type="submit" id="pswResetBtn" class="defaultButton fancy-button">Wyślij e-mail</button>
                 </div>
-                <div class="formFooter"> Wróć do logowania    <a href="login.html"> Zaloguj</a></div>
+                <div class="formFooter"> Wróć do logowania <a class="fancy-link" href="login.html"> Zaloguj</a></div>
             </form>
-
+            <div class="error" id="errorDiv">
+                <p id="errorP"></p>
+            </div>
         </div>
+
         <!-- Nasz JS -->
         <script src="bundle.js"></script>
     </div>

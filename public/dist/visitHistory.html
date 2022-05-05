@@ -12,21 +12,24 @@
 </head>
 
 <body id="visitDetailsBody">
+    <!-- NavBar -->
     <div class="topnav">
         <a class="active" href="mainpage.html">Wizyty</a>
         <a href="visitHistory.html">Historia Wizyt</a>
-        <a href="#">Cos</a>
-        <a href="#">cos</a>
+        <a href="referral.html">Wystawione skierowania</a>
         <div class="profileMenu">
             <img id="profilePic" src="">
             <p id="welcomeName"></p>
             <a class="but" href="profile.html">Profil</a>
             <a class="but" href="settings.html">Ustawienia</a>
             <a class="but" href="help.html">Pomoc</a>
-            <button style="float: left;" id="SignOutBtn">Wyloguj się</button>
+            <button class="signOutButttonMenu" id="SignOutBtn">Wyloguj się</button>
         </div>
     </div>
+
+    <!-- Main -->
     <div class="main">
+<<<<<<< HEAD
     <table class="table">
         <thead>
             <tr>
@@ -37,38 +40,45 @@
             </tr>
         </thead>
         <tbody id="visit-history-table">
+=======
+        <table id="add-doctor" class="table">
+            <thead>
+                <tr>
+                    <th>Data i godzina</th>
+                    <th>Imie Pacjenta</th>
+                    <th>Usuń</th>
+                </tr>
+            </thead>
+            <tbody id="visit-history-table">
+>>>>>>> 5780e859d8a2b779cc880706721404bbed0d54c2
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     </div>
     <div class="footer">
         Stopka
         <p>Jakieś duperele</p>
     </div>
-    <style>
-            * {
-                color: white;
-                font-size: 1rem;
-            }
+    <dialog class="delConfirmModal" id="delConfirmModal">
+        <h2>Chcesz usunąć tą wizytę?</h2>
+        <form method="dialog">
+            <button id="delConfirmButton" class="deleteButton">Usuń</button>
+        </form>
+        <button id="closeDelConfirmModal">Zamknij</button>
+    </dialog>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            setTimeout(() => $('#add-doctor').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Polish.json"
+                }
+            }), 800)
 
-            #add-doctor-visit-table,td
-            {
-                border: 1px solid white;
-                text-align: center;
-            }
-
-            button {
-                color: black;
-                padding: 0.5em;
-            }
-
-            .deleteButton {
-                color: black;
-                background-color: red;
-                padding: 0.5em;
-            }
-        </style>
-        
+        });
+    </script>
     <script src="bundle.js"></script>
 </body>
 

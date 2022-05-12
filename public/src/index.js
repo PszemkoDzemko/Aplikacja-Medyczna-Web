@@ -8,7 +8,8 @@ import {
   browserLocalPersistence,
   onAuthStateChanged,
   sendEmailVerification,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  deleteUser
 } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
@@ -42,6 +43,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 const storage = getStorage();
+const user = auth.currentUser;
 
 //Sesja----------------------------------------------------------------
 const index = document.querySelector('#Index');
@@ -710,6 +712,27 @@ if (editButton){
   })
   
 }
+
+//Usuwanie konta
+const deleteAccBtn = document.getElementById('deleteAccountBtn');
+const modal = document.getElementById('delAccModal');
+const closeModal = document.getElementById('closeDelAccModal');
+const delAccButton = document.getElementById('delAccButton');
+deleteAccBtn.addEventListener('click',()=>{
+  modal.showModal();
+  closeModal.addEventListener('click', () => {
+    modal.close();
+  })
+  delAccButton.addEventListener('click', () => {
+    console.log(auth.currentUser)
+  deleteUser(auth.currentUser).then(()=>{
+    //użytkownik usunięty wywalić na główną strone 
+    setTimeout(() => { window.location.href = 'index.html' }, 500)
+      }).catch((error)=>{
+        //error
+      })
+    })
+})
 
 //Trzeba zrobić funkcję wyświetlającą błedy która tworzy jakiegoś diva albo dodaje do istniejącegoi przesyła mu error message
 //ewentualnie zmiana opcji display z none na block i się wtedy pojawi div

@@ -9,6 +9,7 @@
     <title>Medopek</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
 <body>
@@ -60,20 +61,35 @@
         <div class="edytuj">
             <p>Zmien zdjęcie</p>
             <input type="file" accept=".jpg,.png" id="profileImgUpload">
-            <input type="submit" id="profileImgUploadButton"><br>
+            <input type="submit" id="profileImgUploadButton"><br><br>
 
-            <a href="editDoctorData.html">Edytuj profil</a>
-            
+            <a href="editDoctorData.html">Edytuj profil</a><br><br>
+
+            <button id="deleteAccountBtn" class="deleteButton fancy-button">Usuń konto</button>
         </div>
+        <dialog id="delAccModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">
+                        <div class="icon-box">
+                            <i class="material-icons">&#xE5CD;</i>
+                        </div>						
+                        <h4 class="modal-title w-100">Chcesz usunąć konto?</h4>	
+                        
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeDelAccModal">Zamknij</button>
+                        <button type="button" class="btn btn-danger" id="delAccButton">Usuń</button>
+                    </div>
+                </div>
+            </div>
+        </dialog>  
     </div>
     <div class="footer">
         Stopka
         <p>Jakieś duperele</p>
     </div>
     <style>
-        *{
-            color:white;
-        }
         #profilePagePic{
             width: 15em;
             height: 15em;

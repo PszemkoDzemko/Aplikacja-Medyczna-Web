@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <title>Medopek</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body id="EditDoctorBody">
+    <!-- Main -->
+    <div class="main">
+        <div class="containerReg">
+            <div class="wrapper">
+              <form action="javascript:void(0);">
+                <div class="title2">Zmień dane lekarza
+                </div>
+                <div class="row">
+                  <!-- <label for="psw-repeat"><b>Imie</b></label> -->
+                  <i class="fa fa-user-circle" aria-hidden="true"></i>
+                  <input type="text" placeholder="Podaj imie" name="name" id="editName" required pattern=".{2,}" oninvalid="this.setCustomValidity('Imię jest wymagane')"  oninput="this.setCustomValidity('')">
+                </div>
+                <div class="row">
+                  <!-- <label for="psw-repeat"><b>Nazwisko</b></label> -->
+                  <i class="fa fa-user-circle" aria-hidden="true"></i>
+                  <input type="text" placeholder="Podaj nazwisko" name="surname" id="editSurname" required pattern=".{2,}" oninvalid="this.setCustomValidity('Nazwisko jest wymagane')"  oninput="this.setCustomValidity('')">
+                </div>
+                <div class="row">
+                  <!-- <label for="psw-repeat"><b>Adress</b></label> -->
+                  <i class="fa fa-home" aria-hidden="true"></i>
+                  <input type="text" placeholder="Podaj adres" name="localization" id="editLocalization" required pattern=".{2,}" oninvalid="this.setCustomValidity('Adres jest wymagane')"  oninput="this.setCustomValidity('')">
+                </div>
+                <div class="row">
+                  <label for="docSpec" style="color:  black">Wybierz specjalizacje:</label>
+                  <select name="docSpec" id="editSpec" class="spec">
+                    <option value="Ginekolog">Ginekolog</option>
+                    <option value="Onkolog">Onkolog</option>
+                    <option value="Neurolog">Neurolog</option>
+                    <option value="Ortopeda">Ortopeda</option>
+                  </select>
+                </div>
+                <div class="row button">
+                  <button type="submit" class="registerBttn fancy-button" id="editDoctorDataButton">Zmień dane</button>
+                </div>
+                <div class="error" id="errorDiv">
+                  <p id="errorP"></p>
+                </div>
+            </div>
+            </form>
+        
+          </div>
+          </div>
+    </div>
+    <div class="footer">
+        Stopka
+        <p>Jakieś duperele</p>
+    </div>
+
+    <script src="bundle.js"></script>
+</body>
+
+</html>

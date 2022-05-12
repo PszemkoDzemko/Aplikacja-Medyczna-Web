@@ -675,20 +675,41 @@ function renderDoctors(doc) {
   }
 }
 
-/*console.log(getCount("doctors"));
+// Edytowanie danych lekarza CHYBA DZIAłA
 
-// licznik nie działa 
-function getCount(col) {
-  // Sum the count of each shard in the subcollection
-  return db.collection(col).get().then((snapshot) => {
-      let total_count = 0;
-      snapshot.forEach((doc) => {
-          total_count += doc.data().count;
-      });
+const editButton = document.querySelector('#editDoctorDataButton');
+const editName = document.querySelector('#editName');
+const editSurname = document.querySelector('#editSurname');
+const editLocalization = document.querySelector('#editLocalization');
+const editSpecialization = document.querySelector('#editSpec')
+if (editButton){
 
-      return total_count;
-  });
-}*/
+  getDoc(doc(db, "doctors", uid))
+    .then((snapshot) => {
+      editName.value = snapshot.data().name
+      editSurname.value = snapshot.data().surname
+      editLocalization.value = snapshot.data().localization
+      editSpecialization.value = snapshot.data().specialization
+    })
+
+  editButton.addEventListener('click', () => {
+    if(editName.validity.valid){console.log(2);
+      if (editSurname.validity.valid) {console.log(3);
+        if (editLocalization.validity.valid) {console.log(4);
+          if (editSpecialization.validity.valid) {console.log(5);
+            const newName = editName.value;
+            const newSurname = editSurname.value;
+            const newLocalization = editLocalization.value;
+            const newSpecialization = editSpecialization.value;
+            updateDoc(doc(db, "doctors", uid), { name: newName, surname: newSurname, specialization: newSpecialization, localization: newLocalization});
+            setTimeout(() => { window.location.href = 'profile.html' }, 500);
+          }
+        }
+      }
+    }
+  })
+  
+}
 
 //Trzeba zrobić funkcję wyświetlającą błedy która tworzy jakiegoś diva albo dodaje do istniejącegoi przesyła mu error message
 //ewentualnie zmiana opcji display z none na block i się wtedy pojawi div

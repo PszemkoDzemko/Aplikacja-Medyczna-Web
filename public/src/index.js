@@ -727,7 +727,10 @@ deleteAccBtn.addEventListener('click',()=>{
     console.log(auth.currentUser)
   deleteUser(auth.currentUser).then(()=>{
     //użytkownik usunięty wywalić na główną strone 
-    setTimeout(() => { window.location.href = 'index.html' }, 500)
+    signOut(auth).then(() => {
+      sessionStorage.clear();
+      window.location.href = './index.html';
+    })
       }).catch((error)=>{
         //error
       })

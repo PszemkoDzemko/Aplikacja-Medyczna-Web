@@ -43,7 +43,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 const storage = getStorage();
-const user = auth.currentUser;
 
 //Sesja----------------------------------------------------------------
 const index = document.querySelector('#Index');
@@ -94,21 +93,23 @@ if (registerButton) {
                 createUserWithEmailAndPassword(auth, registerEmail.value, registerPsw.value)
                   .then((userCredential) => {
                     addDoctorDetails(userCredential.user.uid)
+                    sessionStorage.setItem('uid',userCredential.user.uid)
                     sendEmailVerification(userCredential.user)
                       .then(() => { })
                   })
                   .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.log(errorMessage)
+                    console.log(errorMessage);
+                    showError(errorCode);
                   })
               }
             }
           }
         }
       } else {
-        showError("not-same-psw")
-        console.log("hasła nie są takie same")
+        showError("not-same-psw");
+        console.log("hasła nie są takie same");
       }
     }
   })
@@ -718,7 +719,8 @@ const deleteAccBtn = document.getElementById('deleteAccountBtn');
 const modal = document.getElementById('delAccModal');
 const closeModal = document.getElementById('closeDelAccModal');
 const delAccButton = document.getElementById('delAccButton');
-deleteAccBtn.addEventListener('click',()=>{
+if(deleteAccBtn){
+  deleteAccBtn.addEventListener('click',()=>{
   modal.showModal();
   closeModal.addEventListener('click', () => {
     modal.close();
@@ -736,6 +738,8 @@ deleteAccBtn.addEventListener('click',()=>{
       })
     })
 })
+}
+
 
 //Trzeba zrobić funkcję wyświetlającą błedy która tworzy jakiegoś diva albo dodaje do istniejącegoi przesyła mu error message
 //ewentualnie zmiana opcji display z none na block i się wtedy pojawi div

@@ -21,37 +21,37 @@
         <div class="row">
           <!-- <label for="email"><b>E-mail</b></label> -->
           <i class="fa fa-user" aria-hidden="true"></i>
-          <input type="text" class="validation" placeholder="Podaj adres e-mail" name="email" id="registerEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" oninvalid="this.setCustomValidity('Podaj poprawny adres e-mail')"  oninput="this.setCustomValidity('')">
+          <input type="text" class="validation" placeholder="Podaj adres e-mail" name="email" id="registerEmail" maxlength="40" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" oninvalid="this.setCustomValidity('Podaj poprawny adres e-mail')"  oninput="this.setCustomValidity('')">
         </div>
         <div class="row">
           <!-- <label for="psw"><b>Hasło</b></label> -->
           <i class="fa fa-lock" aria-hidden="true"></i>
-          <input type="password" class="validation" placeholder="Podaj Hasło" name="psw" id="registerPsw" required pattern=".{6,}"  oninvalid="this.setCustomValidity('Hasło musi mieć min. 6 znaków')"  oninput="this.setCustomValidity('')">
+          <input type="password" class="validation" placeholder="Podaj Hasło" name="psw" id="registerPsw" maxlength="40" required pattern=".{6,}"  oninvalid="this.setCustomValidity('Hasło musi mieć min. 6 znaków')"  oninput="this.setCustomValidity('')">
         </div>
         <div class="row">
           <!-- <label for="psw-repeat"><b>Hasło jeszcze raz</b></label> -->
           <i class="fa fa-lock" aria-hidden="true"></i>
-          <input type="password" class="validation" placeholder="Powtórz hasło" name="psw-repeat" id="registerPsw-repeat" required pattern=".{6,}" oninvalid="this.setCustomValidity('Hasła muszą być identyczne')"  oninput="this.setCustomValidity('')">
+          <input type="password" class="validation" placeholder="Powtórz hasło" name="psw-repeat" id="registerPsw-repeat" maxlength="40" required pattern=".{6,}" oninvalid="this.setCustomValidity('Hasła muszą być identyczne')"  oninput="this.setCustomValidity('')">
         </div>
         <div class="row">
           <!-- <label for="psw-repeat"><b>Imie</b></label> -->
           <i class="fa fa-user-circle" aria-hidden="true"></i>
-          <input type="text" class="validation" placeholder="Podaj imie" name="name" id="registerName" required pattern=".{2,}" oninvalid="this.setCustomValidity('Imię jest wymagane')"  oninput="this.setCustomValidity('')">
+          <input type="text" class="validation" placeholder="Podaj imie" name="name" id="registerName" maxlength="40" required pattern=".{2,}" oninvalid="this.setCustomValidity('Imię jest wymagane')"  oninput="this.setCustomValidity('')">
         </div>
         <div class="row">
           <!-- <label for="psw-repeat"><b>Nazwisko</b></label> -->
           <i class="fa fa-user-circle" aria-hidden="true"></i>
-          <input type="text" class="validation" placeholder="Podaj nazwisko" name="surname" id="registerSurname" required pattern=".{2,}" oninvalid="this.setCustomValidity('Nazwisko jest wymagane')"  oninput="this.setCustomValidity('')">
+          <input type="text" class="validation" placeholder="Podaj nazwisko" name="surname" id="registerSurname" maxlength="40" required pattern=".{2,}" oninvalid="this.setCustomValidity('Nazwisko jest wymagane')"  oninput="this.setCustomValidity('')">
         </div>
         <div class="row">
           <!-- <label for="psw-repeat"><b>Adress</b></label> -->
           <i class="fa fa-home" aria-hidden="true"></i>
-          <input type="text" class="validation" placeholder="Podaj adres" name="localization" id="registerLocalization" required pattern=".{2,}" oninvalid="this.setCustomValidity('Adres jest wymagane')"  oninput="this.setCustomValidity('')">
+          <input type="text" class="validation" placeholder="Podaj adres" name="localization" id="registerLocalization" maxlength="40" required pattern=".{2,}" oninvalid="this.setCustomValidity('Adres jest wymagane')"  oninput="this.setCustomValidity('')">
         </div> 
         <div class="row">
           <!-- <label for="psw-repeat"><b>Numer PWZ</b></label> -->
           <i class="fa fa-address-card" aria-hidden="true"></i>
-          <input type="text" class="validation" placeholder="Podaj numer PWZ" name="pwz" id="registerPwz" required pattern="[0-9]{4,}" oninvalid="this.setCustomValidity('Numer PWZ musi mieć min. 4 cyfry')"  oninput="this.setCustomValidity('')">
+          <input type="text" class="validation" placeholder="Podaj numer PWZ" name="pwz" id="registerPwz" maxlength="6" required pattern="[0-9]{4,}" oninvalid="this.setCustomValidity('Numer PWZ musi mieć min. 4 cyfry')"  oninput="this.setCustomValidity('')">
         </div>
         <div class="row">
           <label for="docSpec">Wybierz specjalizacje:</label>

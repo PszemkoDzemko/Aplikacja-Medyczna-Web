@@ -13,10 +13,19 @@
 
 <body>
     <!-- NavBar -->
-    <div class="topnav">
-        <a class="active" href="mainpage.html">Wizyty</a>
-        <a href="visitHistory.html">Historia Wizyt</a>
-        <a href="referral.html">Wystawione skierowania</a>
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+    
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+    
+          <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+              <li><a class="nav-link scrollto active" href="mainpage.html">Wizyty</a></li>
+              <li><a class="nav-link scrollto" href="visitHistory.html">Historia wizyt</a></li>
+              <li><a class="nav-link scrollto" href="referral.html">Wystawione skierowania</a></li>
+            </ul>
+            
         <div class="profileMenu">
             <img id="profilePic" src="">
             <p id="welcomeName"></p>
@@ -24,7 +33,10 @@
             <a class="but" href="help.html">Pomoc</a>
             <button class="signOutButttonMenu" id="SignOutBtn">Wyloguj się</button>
         </div>
-    </div>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+          </nav><!-- .navbar -->
+        </div>
+      </header><!-- End Header -->
 
     <!-- Main -->
     <div class="main">

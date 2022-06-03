@@ -967,3 +967,56 @@ input[type=search] {
 
 
   /* referral modal */
+  #add-doctor-visit-table,
+  td {
+      border: 1px solid white;
+      text-align: center;
+      font-size: 1rem;
+  }
+
+  .referralModal {
+      color: black;
+      padding: 1em;
+      width: 30vw;
+      top: 40%;
+      left: 35%;
+  }
+  .editModal{
+      color: black;
+      padding: 1em;
+      width: 30vw;
+      top: 40%;
+      left: 35%;
+  }
+  .editModal::backdrop{
+      background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+      opacity: .7;
+  }
+  .editModal h2{
+      color:black;
+  }
+
+  .referralModal::backdrop {
+      background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+      opacity: .7;
+  }
+
+  .referralModal input{
+      padding: 0.5em;
+      margin: 0.3em;
+  }
+  .referralModal h2 {
+      color: black;
+  }
+
+  button {
+      color: black;
+      padding: 0.5em;
+  }
+
+  .deleteButton {
+      color: black;
+      background-color: red;
+      padding: 0.5em;
+      border-radius: 0.2em;
+  }

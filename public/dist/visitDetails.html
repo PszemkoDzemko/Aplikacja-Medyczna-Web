@@ -57,6 +57,7 @@
             </tbody>
         </table>
         <!-- Modal dodawania skierowania -->
+        
         <dialog class="referralModal" id="referralModal">
             <h2>Dodaj skierowanie</h2>
             <form method="dialog">
@@ -78,8 +79,9 @@
             </form>
             <button id="closeReferralModal">Zamknij</button>
         </dialog>
+    
         <dialog class="editModal" id="editModal">
-            <h2>Dodaj skierowanie</h2>
+            <h2>Wybierz date</h2>
             <form method="dialog">
                 <div class="row">
                     <label for="newVisitData"><b>Wybierz date</b></label>
@@ -114,6 +116,20 @@
             width: 30vw;
             top: 40%;
             left: 35%;
+        }
+        .editModal{
+            color: black;
+            padding: 1em;
+            width: 30vw;
+            top: 40%;
+            left: 35%;
+        }
+        .editModal::backdrop{
+            background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+            opacity: .7;
+        }
+        .editModal h2{
+            color:black;
         }
 
         .referralModal::backdrop {

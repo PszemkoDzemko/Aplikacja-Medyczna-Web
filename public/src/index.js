@@ -52,16 +52,25 @@ onAuthStateChanged(auth, (user) => {
     if (index) {
       //użytkownik jest zalogowany
       //wrzuć go na mainpage
-      console.log(user.uid)
-      getDoc(doc(db, "doctors", user.uid))
-        .then((snapshot) => {
-          sessionStorage.setItem("uid", user.uid);
-          if (snapshot.data() === undefined) {
-            window.location.href = 'addDoctorData.html';
-          } else {
-            window.location.href = 'mainpage.html';
-          }
+      const emailVer = auth.currentUser.emailVerified
+      console.log(emailVer)
+      if(!emailVer){
+        showError("emailVer");
+        signOut(auth).then(() => {
+          sessionStorage.clear();
         })
+      }else{
+        console.log(user.uid)
+        getDoc(doc(db, "doctors", user.uid))
+          .then((snapshot) => {
+            sessionStorage.setItem("uid", user.uid);
+            if (snapshot.data() === undefined) {
+              window.location.href = 'addDoctorData.html';
+            } else {
+              window.location.href = 'mainpage.html';
+            }
+          })
+      }
     } else if (register) {
     }
   } else {
@@ -93,7 +102,6 @@ if (registerButton) {
                 createUserWithEmailAndPassword(auth, registerEmail.value, registerPsw.value)
                   .then((userCredential) => {
                     addDoctorDetails(userCredential.user.uid)
-                    sessionStorage.setItem('uid',userCredential.user.uid)
                     sendEmailVerification(userCredential.user)
                       .then(() => { })
                   })
@@ -146,7 +154,7 @@ async function addDoctorDetails(id) {
   };
   console.log(newDoc)
   await setDoc(doc(db, "doctors", id), newDoc);
-  window.location.href = 'mainpage.html';
+  window.location.href = 'index.html';
 }
 
 
@@ -167,10 +175,6 @@ if (loginButton) {
             //zaloguj mailem i hasłem
             signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
               .then((userCredential) => {
-                //tu trzeba sprawdzić czy istnieje taki lekarz i jak nie to wylogować gościa
-                //albo dać opcje założenia konta lekarza
-                //w sensie sparawdzacie czy w kolekcji lekarzy istnieje dokument o id userCredential.user.uid jak istnieje to spoko a jak nie to szybki singout
-                //i można przenieść na jakąś stronę czy coś
               })
               .catch((error) => {
                 //tu są błędy jak coś nie działa np. złe hasło czy coś
@@ -625,6 +629,8 @@ function showError(error) {
     errorP.textContent = "Hasło powinno mieć min 6 znaków";
   } else if (error === "not-same-psw") {
     errorP.textContent = "Hasła nie są identyczne";
+  } else if (error === "emailVer"){
+    errorP.textContent = "E-Mail nie został zweryfikowany";
   }
 }
 

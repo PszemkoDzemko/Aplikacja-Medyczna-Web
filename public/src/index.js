@@ -419,7 +419,7 @@ function doneVisit(id) {
   updateDoc(doc(db, "visits", id), { done: true });
   setTimeout(() => { window.location.reload(true) }, 500)
 }
-
+//essa
 //Szczegóły wiztyty-------------------------------------------------
 //Tu jest problem z tym chyba że nie bedziemy odświerzać strony tylko zmienimy diva 
 const visitDetailsBody = document.getElementById('visitDetailsBody');
